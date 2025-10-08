@@ -1,0 +1,60 @@
+\subsection{Datos}
+
+\qquad Para tener un valor ajustado para las opciones de prepago, es fundamental conocer el costo de oportunidad que tiene sobre el banco la ejecución de esta acción. Es por esto que nos enfocamos en entender el comportamiento de los instrumentos financieros con los cuales el banco toma posición en el mercado y gestiona riesgos.
+
+\subsubsection{Swap Camara Promedio en CLP}
+
+\qquad Un contrato del tipo \textit{Interest Rate Swap} (IRS) corresponde a un derivado financiero en el que se acuerda un intercambio de flujos a distintas tasas de interes. En este casos nos concentraremos en los contratos interbancarios en CLP, en los cuales un banco entrega un flujo a una tasa fija mientras que la contraparte entrega uno a tasa flotante (variable). El valor del contrato se considera a la tasa fija acordada, lo que se dice pata fija. Estos contratos son la principal manera en la que los bancos pueden gestionar y transferir sus riesgos.
+
+\qquad Actualmente, a nivel nacional, existen 17 tipos de contratos swap transados entre los bancos los cuales son los siguientes:
+
+\begin{center}
+    {\small Tabla 3.1 - Los 17 contratos IRS en Chile}\\
+    \begin{tabular}{| c | c |}
+    \hline
+    Tiempo & Abreviación Bloomberg \\ \hline
+    1 mes & CHSWPA \\ \hline
+    2 meses & CHSWPB \\ \hline
+    3 meses & CHSWPC \\ \hline
+    6 meses & CHSWPF \\ \hline
+    9 meses & CHSWPI \\ \hline
+    1 año & CHSWP1 \\ \hline
+    1 año y 6 meses & CHSWP1F \\ \hline
+    2 años & CHSWP2 \\ \hline
+    3 años & CHSWP3 \\ \hline
+    4 años & CHSWP4 \\ \hline
+    5 años & CHSWP5 \\ \hline
+    7 años & CHSWP7 \\ \hline
+    10 años & CHSWP10 \\ \hline
+    12 años & CHSWP12 \\ \hline
+    15 años & CHSWP15 \\ \hline
+    20 años & CHSWP20 \\ \hline
+    25 años & CHSWP25 \\ \hline
+\end{tabular}
+\end{center}
+
+\qquad Como ya se dijo anteriormente, entender como se comportarán los valores de estos contratos a futuro es fundamenteal para entender el costo de oportunidad del banco. Y así, poder valorizar opciones de prepago.
+
+\subsubsection{Tasa de Politica Monetaria (TPM)}
+
+\qquad La Tasa de Política Monetaria (TPM) constituye el principal instrumento que utiliza el Banco Central para conducir la política monetaria del país. Se trata de una tasa de interés de referencia que el Banco Central determina con el objetivo de influir en el comportamiento de la economía, especialmente en lo que respecta al control de la inflación y la preservación de la estabilidad de los precios. Esta tasa actúa como una señal para el sistema financiero, ya que sus variaciones inciden directamente en las tasas de interés que aplican los bancos comerciales y otras instituciones financieras en sus operaciones de crédito y ahorro.
+
+\qquad Cuando el Banco Central interviene en el mercado interbancario, es decir, en las transacciones entre bancos, lo hace utilizando la TPM como guía para establecer el costo del dinero en el corto plazo. De esta manera, puede incentivar o desalentar el acceso al crédito, dependiendo de las condiciones económicas que se estén enfrentando. Por ejemplo, si la inflación se encuentra por encima del rango meta establecido, el Banco Central puede optar por elevar la TPM, encareciendo el crédito y reduciendo el consumo y la inversión, lo que tiende a moderar la presión sobre los precios. En cambio, si la economía muestra signos de desaceleración o si la inflación está por debajo del objetivo, puede reducir la TPM para estimular el gasto y la actividad económica. Es por esto que es valioso contar con el historial histórico de la TPM, ya que nos ayudará a analizar los valores de los 17 contratos swap.
+
+\subsubsection{Descripción}
+
+\begin{itemize}
+    \item Con respecto a los valores de los contratos IRS, contaremos con el historial del valor de cierre del día para cada tipo, es decir, la tasa fija del último contrato transado ese día. Contamos con el historial desde el 2021 hasta septiembre de 2025, al ser 17 contratos se obtiene una matriz float de tamaño 1256 $\times$ 17. Estos datos los obtenemos de Bloomberg, entregados por la contraparte del banco.
+    \item El historial de valores diarios de la TPM es publicada por el Banco Central. Contamos con un historial desde el 2021, lo cual resulta tambien en una matriz float de tamaño 1180 $\times$ 1.
+\end{itemize}
+
+\qquad La razón por la cual el historial con el que contamos de ambos datos es desde el 2021, es que en ese año se introducieron los contratos de un mes y dos meses. Por lo que, para que los datos sean comparables necesitamos iniciar desde donde todos los contratos actuales existian.
+
+\subsection{Objetivos Menores}
+
+\qquad A partir de estos datos y de su importancia dentro del proyecto, se reconocen dos nuevos objetivos menores, que siguen siendo relevantes:
+
+\begin{itemize}
+    \item Caracterizar la dinámica de la curva swap en pesos chilenos para ser usada en la calibración del modelo.
+    \item Alinear el modelo con la estructura de mercado local, con tal que represente fielmente condicones nacionales actuales.
+\end{itemize}
