@@ -12,7 +12,8 @@
 \usepackage{booktabs} % Tables
 \usepackage{setspace} % Spaces
 \setlength{\parindent}{0in}
-
+\usepackage[spanish]{babel}
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
 \usepackage{color} % Colors
 \usepackage{bm} % Bold
 \usepackage[bb=dsserif]{mathalpha}% Required for inserting images
@@ -23,7 +24,9 @@
 \usepackage{xcolor} % Color
 \usepackage{tcolorbox} % Colorbox
 \usepackage[framemethod=TikZ]{mdframed} % Colorbox
-
+\usepackage{hyperref}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
 %% Commands %%
 % Boxes
 \mdfdefinestyle{definition}{%
@@ -155,7 +158,7 @@
 	\vspace{2mm}
 	{\bf \nombre}\\
         \vspace{1mm}
-        {8 de septiempre de 2025}
+        {13 de octubre de 2025}
 \end{center}
 \newpage
 
@@ -170,4 +173,13 @@
 
 \section{Exploración y Procesamiento de los Datos}
 \input{Sections/exploracion.tex}
+
+\section{Modelo Propuesto}
+\input{Sections/modelo.tex}
+
+\section{Planificación de Tareas Futuras}
+\input{Sections/gantt.tex}
+
+\input{Sections/biblio.tex}
+
 \end{document}

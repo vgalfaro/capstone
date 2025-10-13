@@ -5,17 +5,27 @@
 \qquad Existe un problema al querer analizar los datos de los valores observados de los contratos, y es que no todos funcionan de la misma manera. Esto es una complicación ya que significa que los datos de la matriz no representan lo mismo con respecto al largo del intervalo de su contrato, haciendo que no sean comparables.
 
 \qquad Las tasas de interes de los contratos de 1 a 18 meses se les dice cero cupón. Esto se debe a que desde el inicio del contrato, solo se hace el intercambio de flujo al finalizar el periodo de tiempo, lo que es el pago del nominal mas los intereses correspondientes.\\
-
-\begin{center}
-    \includegraphics[scale=0.5]{images/diagrama_contratos_cero_cupon.png}
-    {\small Imagen 3.1 - Diagrama contratos cero cupón}
-\end{center}
-
+\begin{figure}[H]
+  \centering
+      \includegraphics[scale=0.45]{images/diagrama_contratos_cero_cupon.png}
+  \caption{Diagrama contratos cero cupón
+  }\label{fig:0cupon}
+\end{figure}
+% \begin{center}
+%     \includegraphics[scale=0.5]{images/diagrama_contratos_cero_cupon.png}
+%     {\small Imagen 3.1 - Diagrama contratos cero cupón}
+% \end{center}
 \qquad Por otro lado, los contratos de 2 a 25 años funcionan con cupones semestrales, es decir, cada seis meses desde el inicio del contrato se hace un deposito de intereses.
-\begin{center}
-    \includegraphics[scale=0.5]{images/diagrama_contratos_semestrales.png}
-    {\small Imagen 3.2 - Diagrama contratos con cupones semestrales}
-\end{center}
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=0.45]{images/diagrama_contratos_semestrales.png}
+  \caption{Diagrama contratos con cupones semestrales
+  }\label{fig:0cupon}
+\end{figure}
+% \begin{center}
+%     \includegraphics[scale=0.5]{images/diagrama_contratos_semestrales.png}
+%     {\small Imagen 3.2 - Diagrama contratos con cupones semestrales}
+% \end{center}
 
 \subsubsection{\textit{Bootstraping}}
 
@@ -42,3 +52,33 @@ donde $\text{buss}(\Delta T_i)$ corresponde a los días habiles en tal periodo d
 \qquad Existen varias formas de resolver este problema, para efectos de esta etapa exploratoria de los datos decidimos realizar una interpolación lineal para la tasa de cada $T_i$ necesario. Por ejemplo, la tasa ficticia para un contrato de 30 meses, con cupones semestrales, se calcula como el promedio entre la tasa de los dos años y tres años.
 
 $$r_{30 \text{M}} = \dfrac{r_{2 \text{Y}} + r_{3 \text{Y}}}{2}.$$
+
+\subsection{PCA}
+\qquad Una vez que todos los contratos están normalizados a tasas cero cupón, es posible 
+comparar los datos entre si. Sin embargo, sigue existiendo el problema de la 
+dimensionalidad. En este caso, cada observación tiene 17 dimensiones, lo que hace difícil 
+analizar los datos y encontrar patrones. El modelo que utilizaremos recibe como input una 
+tasa, es por ello que caracterizar los datos en una sola dimensión es crucial. 
+
+Litterman y Scheinkman (1991) observaron que con 3 componentes es posible describir el 99\% de la variabilidad observada en el mercado, en particular, la primera componente explica aproximadamente el 96\% de la variabilidad\cite{pca}.
+
+Al realizar PCA obtuvimos que las primeras 2 componentes explican el 98\% de la varianza, pero la primera componente solo explica el 81.5\% de la variabilidad. Este resultado es bajo respecto a lo esperado, pero puede ser explicado por el corto periodo que abarcan los datos, de 2021 a 2025 y por el contexto económico particular de este periodo, que incluye a la pandemia y una alta inflación. 
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.7]{images/pca.png}
+    \caption{Varianza explicada por cada componente principal
+    }\label{fig:varpca}
+\end{figure}
+\subsection{La tasa corta}
+\qquad A pesar de que la primera componente no explicó de forma esperada la variabilidad de la muestra, podemos interpretar esta componente como la tasa corta (1M), pues esto se debe a fenómenos relacionados al contexto de la muestra y que al variar el nivel de la tasa corta, esta sigue controlando y captura de buena manera el comportamiento de los 17 tenores. En el siguiente gráfico podemos observar la correlación entre la tasa corta (1M) junto a la TPM, notando como la tasa corta sigue de buena manera el comportamiento de la TPM.
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.5]{images/tasacortatpm.png}
+    \caption{Tasa corta (1M) vs TPM
+    }\label{fig:varpca}
+\end{figure}
+Por la naturaleza de la TPM, el mercado busca anticiparse a los cambios de la TPM, esto provoca ese efecto “serrucho”, donde la tasa corta (1M) sube antes que la TPM y baja después de la TPM. 
+
+Dado que la tasa corta (1M) explica gran parte de la variabilidad 
+de los datos y que tiene sentido económico, se decidió utilizar 
+esta tasa para calibrar el modelo.
