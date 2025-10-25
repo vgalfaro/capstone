@@ -4,14 +4,34 @@
 
 \qquad El Banco Itaú Chile es una de las principales instituciones financieras del país y forma parte del grupo Itaú Unibanco, el mayor banco privado de América Latina, con sede en Brasil. En Chile, Itaú inició sus operaciones en 2006, consolidando su presencia tras la fusión con CorpBanca en 2016, lo que lo posicionó entre los bancos más relevantes del sistema financiero nacional.
 
-\qquad El banco ofrece una amplia gama de servicios financieros tanto a personas como a empresas. Sin embargo, aquí nos centramos en su rol de banco de retail, en el cual se centra en ofrecer una diversa variedad de productos y servicios financieros accesibles, como cuentas corrientes, créditos de consumo, hipotecarios, tarjetas de crédito, seguros e inversiones, junto con herramientas digitales que facilitan la gestión cotidiana del dinero.
+\qquad El banco ofrece una amplia gama de servicios financieros tanto a 
+personas como a empresas. Sin embargo, aquí nos centramos en su rol de 
+banco de retail, en el cual se centra en ofrecer una diversa variedad de 
+productos y servicios financieros accesibles, como cuentas corrientes, 
+créditos de consumo, hipotecarios, tarjetas de crédito, seguros e 
+inversiones, junto con herramientas digitales que facilitan la gestión 
+cotidiana del dinero.
 
 \subsection{El Problema}
 
-\qquad Los creditos, en particular los hipotecarios, son uno de los principales productos que ofrece el banco, los cuales corresponden a un activo. Para financiar estos prestamos se es necesario venderle un bono a sus inversores, lo cual es un pasivo. Como los creditos hipotecarios son a largo plazo, los pasivos con los cuales el banco contraresta tambien tiene que serlo, para así tener un flujo de caja esperado en el plazo de tiempo correspondiente. Por ejemplo, para los creditos a 30 años, el banco vende bonos tambien a 30 años.
+\qquad Los créditos, en particular los hipotecarios, son uno de los 
+principales productos que ofrece el banco, los cuales corresponden a un 
+activo. Para financiar estos préstamos se es necesario venderle un bono 
+a sus inversores, lo cual es un pasivo. Como los créditos hipotecarios 
+son a largo plazo, los pasivos con los cuales el banco contrarresta 
+tambien tiene que serlo, para así tener un flujo de caja esperado en el 
+plazo de tiempo correspondiente. Por ejemplo, para los créditos a 30 
+años, el banco vende bonos tambien a 30 años.
 
-\qquad Sin embargo, luego de que el cliente obtiene el crédito puede ocurrir que las tasas a largo plazo bajén. Ante esta situación, al deudor le conviene prepagar su crédito con el banco e irse a otro a pedir un prestamo con menos interes. Esto es un problema sobretodo cuando ocurre de manera masiva, ya que se corta el flujo entrante esperado por Itaú que en muchas ocaciones queda por debajo del flujo de los pasivos, resultando en perdidas para el banco.
+\qquad Sin embargo, luego de que el cliente obtiene el crédito puede 
+ocurrir que las tasas a largo plazo bajen. Ante esta situación, al 
+deudor le conviene prepagar su crédito con el banco e irse a otro a 
+pedir un préstamo con menos interés. Esto es un problema sobre todo 
+cuando ocurre de manera masiva, ya que se corta el flujo entrante 
+esperado por Itaú que en muchas ocaciones queda por debajo del flujo de 
+los pasivos, resultando en pérdidas para el banco.
 
-\qquad Según la Ley 18010, para los créditos sobre los 5.000 UF  es posible hacer una arreglo contractual donde se determina el proceso del prepago. Por otro lado, se establece que por créditos bajo tal monto, la comisión de prepago no puede superar un mes y medio de intereses calculado sobre el capital que se prepaga \cite{valdes}. Este monto por lo general no es suficiente para cubrir la pérdida del banco.
+\qquad Según la Ley 18010, para los créditos sobre los 5.000 UF  es 
+posible hacer una arreglo contractual donde se determina el proceso del prepago. Por otro lado, se establece que por créditos bajo tal monto, la comisión de prepago no puede superar un mes y medio de intereses calculado sobre el capital que se prepaga \cite{valdes}. Este monto por lo general no es suficiente para cubrir la pérdida del banco.
 
-\qquad La manera en la que actualmente se está enfrentando este problema es a través de una heuristica que consiste en lo siguiente. Para un tipo de crédito dado, se obtiene la vida media de este en un rango temporal que se considere conveniente, que puede ir desde 1 a 10 años. Luego, se asume que el crédito se prepagará en tal vida media calculada, y se sube la tasa de interes del producto hasta obtener el flujo de caja deseado por el banco. Debido a la posición conservadora de los bancos, esta subida de tasa de interes tiende a ser sobreestimada, provocando que el crédito sea más costoso para el cliente de lo que debería ser.
+\qquad La manera en la que actualmente se está enfrentando este problema es a través de una heurística que consiste en lo siguiente. Para un tipo de crédito dado, se obtiene la vida media de este en un rango temporal que se considere conveniente, que puede ir desde 1 a 10 años. Luego, se asume que el crédito se prepagará en tal vida media calculada, y se sube la tasa de interés del producto hasta obtener el flujo de caja deseado por el banco. Debido a la posición conservadora de los bancos, esta subida de tasa de interés tiende a ser sobreestimada, provocando que el crédito sea más costoso para el cliente de lo que debería ser.
