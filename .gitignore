@@ -1,5 +1,6 @@
 swap_camara_df.xlsx
 .DS_Store
+__pycache__
 .ipynb_checkpoints
 tpm_2021.xls
 tpm_2022.xls
