@@ -1,5 +1,6 @@
 swap_camara_df.xlsx
 .DS_Store
+__pycache__
 .ipynb_checkpoints
 tpm_2021.xls
 tpm_2022.xls
@@ -16,3 +17,9 @@ seriestemporales0cupon.png
 seriestemporalesobservadas.png
 tasacortatpm.png
 superficie_swap.png
+ewmavstpm.png
+forwardvsholee.png
+holee_ewma.png
+holee_hist.png
+holeevstasareal.png
+holeevstasareal_error.png
