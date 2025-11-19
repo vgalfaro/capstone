@@ -1,6 +1,6 @@
 class Credit:
 
-    def __innit__(self, ann_rate: float, n_coupons: int, nominal: float, bullet: bool):
+    def __init__(self, ann_rate: float, n_coupons: int, nominal: float, bullet: bool):
 
         self.ann_rate = ann_rate
         self.eff_rate = self.ann_rate/12
