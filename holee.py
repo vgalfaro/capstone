@@ -1,75 +1,75 @@
 import numpy as np
-from credit import rate_to_disc_factor
+from credit import r_to_df
 
 class HoLee:
 
-    def __init__(self, n_periods: int, initial_rate: int, 
-                 dt: float, volat: float, disc_factors: float):
+    def __init__(self, N: int, initial_r: int, 
+                 dt: float, volat: float, df: float):
 
 
-        self.n_periods = n_periods
+        self.N = N
         self.dt = dt
         self.volat = volat
-        self.disc_factors = disc_factors
+        self.df = df
 
-        self.rates = np.zeros([self.n_periods + 1, self.n_periods + 1])
-        self.arr_debr = np.zeros([self.n_periods + 1, self.n_periods + 1])
-        self.drifts = np.zeros(self.n_periods + 1)
+        self.r = np.zeros([self.N + 1, self.N + 1])
+        self.arr_debr = np.zeros([self.N + 1, self.N + 1])
+        self.drifts = np.zeros(self.N + 1)
 
-        self.set_initial_values(initial_rate)
+        self.set_initial_values(initial_r)
 
 
-    def set_initial_values(self, initial_rate):
+    def set_initial_values(self, initial_r):
         
-        self.rates[0][0] = initial_rate
+        self.r[0][0] = initial_r
         self.arr_debr[0][0] = 1
-        self.drifts[0] = ((-(2*self.disc_factors[1]-1)+np.sqrt(1 + 4 * self.disc_factors[1]**2 * self.dt**3 * self.volat**2) )/ (2*self.disc_factors[1]*self.dt) - self.rates[0][0])/self.dt
+        self.drifts[0] = ((-(2*self.df[1]-1)+np.sqrt(1 + 4 * self.df[1]**2 * self.dt**3 * self.volat**2) )/ (2*self.df[1]*self.dt) - self.r[0][0])/self.dt
 
-        self.rates[1][1] = self.rates[0][0] + self.drifts[0]*self.dt + self.volat*np.sqrt(self.dt)
-        self.rates[0][1] = self.rates[0][0] + self.drifts[0]*self.dt - self.volat*np.sqrt(self.dt)
+        self.r[1][1] = self.r[0][0] + self.drifts[0]*self.dt + self.volat*np.sqrt(self.dt)
+        self.r[0][1] = self.r[0][0] + self.drifts[0]*self.dt - self.volat*np.sqrt(self.dt)
     
 
-    def arr_debr_ident(self, drift: float, period: int) -> float:
+    def arr_debr_id(self, drift: float, j: int) -> float:
 
         value = 0
         s = self.volat * np.sqrt(self.dt)
-        bottom_rate = self.rates[0][period] + drift*self.dt - s
-        top_rate = self.rates[period][period] + drift*self.dt + s
+        bot_r = self.r[0][j] + drift*self.dt - s
+        top_r = self.r[j][j] + drift*self.dt + s
 
-        value = 0.5 * self.arr_debr[0][period] * rate_to_disc_factor(bottom_rate, self.dt)
-        value += 0.5 * self.arr_debr[period][period] * rate_to_disc_factor(top_rate, self.dt)
+        value = 0.5 * self.arr_debr[0][j] * r_to_df(bot_r, self.dt)
+        value += 0.5 * self.arr_debr[j][j] * r_to_df(top_r, self.dt)
         
-        for i in range(1, period + 1):
-            rate = self.rates[i][period] + drift*self.dt - s
-            value += 0.5*(self.arr_debr[i-1][period] + self.arr_debr[i][period])*rate_to_disc_factor(rate)
+        for i in range(1, j + 1):
+            r = self.r[i][j] + drift*self.dt - s
+            value += 0.5*(self.arr_debr[i-1][j] + self.arr_debr[i][j])*r_to_df(r, self.dt)
 
-        value -= self.disc_factors[period + 1]
+        value -= self.df[j + 1]
 
         return value
     
 
-    def arr_debr_ident_deriv(self, drift: float, period: int) -> float:
+    def arr_debr_id_d(self, drift: float, j: int) -> float:
 
         value = 0
         s = self.volat * np.sqrt(self.dt)
-        bottom_rate = self.rates[0][period] + drift*self.dt - s
-        top_rate = self.rates[period][period] + drift*self.dt + s
+        bot_r = self.r[0][j] + drift*self.dt - s
+        top_r = self.r[j][j] + drift*self.dt + s
 
-        value -= 0.5 * (self.dt**2) * self.arr_debr[0][period] * rate_to_disc_factor(bottom_rate, self.dt)**2
-        value -= 0.5 * (self.dt**2) * self.arr_debr[period][period] * rate_to_disc_factor(top_rate, self.dt)**2
+        value -= 0.5 * (self.dt**2) * self.arr_debr[0][j] * r_to_df(bot_r, self.dt)**2
+        value -= 0.5 * (self.dt**2) * self.arr_debr[j][j] * r_to_df(top_r, self.dt)**2
 
-        for i in range(1, period+1):
-            rate = self.rates[i][j] + drift*self.dt - s
-            value -= 0.5 * (self.dt**2) * ((self.arr_debr[i-1][period] + self.arr_debr[i][period])*rate_to_disc_factor(rate, self.dt)**2)
+        for i in range(1, j+1):
+            r = self.r[i][j] + drift*self.dt - s
+            value -= 0.5 * (self.dt**2) * ((self.arr_debr[i-1][j] + self.arr_debr[i][j])*r_to_df(r, self.dt)**2)
         return value
     
 
-    def newton_raphson(self, period, initial_guess=0.0, tol=1e-12, max_iter=50):
+    def newton_raphson(self, j, initial_guess=0.0, tol=1e-12, max_iter=50):
 
         drift = initial_guess
         for _ in range(max_iter):
-            F  = self.arr_debr_ident(drift, period)
-            dF = self.arr_debr_ident_deriv(drift, period)
+            F  = self.arr_debr_id(drift, j)
+            dF = self.arr_debr_id_d(drift, j)
 
             if abs(dF) < 1e-18:
                 break
@@ -79,51 +79,71 @@ class HoLee:
             # backtracking line search
             t = 1.0
             while t > 1e-6:
-                cand = theta - t*step
+                cand = drift - t*step
 
                 # chequear positividad de todos los denominadores
                 s = self.volat*np.sqrt(self.dt)
                 ok = True
-                if 1.0 + self.dt*(self.rates[0][period] + cand*self.dt - s) <= 0: ok = False
-                if 1.0 + self.dt*(self.rates[period][period] + cand*self.dt + s) <= 0: ok = False
-                for i in range(1, period):
-                    if 1.0 + self.dt*(self.rates[i][period] + cand*self.dt) <= 0: ok = False
+                if 1.0 + self.dt*(self.r[0][j] + cand*self.dt - s) <= 0: ok = False
+                if 1.0 + self.dt*(self.r[j][j] + cand*self.dt + s) <= 0: ok = False
+                for i in range(1, j):
+                    if 1.0 + self.dt*(self.r[i][j] + cand*self.dt) <= 0: ok = False
 
-                if ok and abs(self.arr_debr_ident(cand, period)) <= abs(F):
-                    theta = cand
+                if ok and abs(self.arr_debr_id(cand, j)) <= abs(F):
+                    drift = cand
                     break
 
                 t *= 0.5
             else:
                 # no mejoró: damos el paso completo igualmente para no quedarnos colgados
-                theta = theta - step
+                drift = drift - step
 
             if abs(step) < tol and abs(F) < tol:
                 break
 
-        return theta
+        return drift
     
     
     def calibrate(self):
 
-        for j in range(1,self.n_periods):
+        for j in range(1,self.N):
         # Precios Arrow-Debreu
             for i in range(0, j+1):
-                rate = self.rates[i][j]
+                r = self.r[i][j]
                 if i == 0:
                     arr_debr = self.arr_debr[i][j-1]
-                    self.arr_debr[i][j] = rate_to_disc_factor(rate, self.dt) * 0.5 * arr_debr
+                    self.arr_debr[i][j] = r_to_df(r, self.dt) * 0.5 * arr_debr
                 elif i == j:
                     arr_debr = self.arr_debr[j-1][j-1]
-                    self.arr_debr[i][j] = rate_to_disc_factor(rate, self.dt) * 0.5 * arr_debr
+                    self.arr_debr[i][j] = r_to_df(r, self.dt) * 0.5 * arr_debr
                 else:
                     arr_debr = (self.arr_debr[i-1][j-1] + self.arr_debr[i][j-1])
-                    self.arr_debr[i][j] = rate_to_disc_factor(rate, self.dt) * 0.5 * arr_debr
+                    self.arr_debr[i][j] = r_to_df(r, self.dt) * 0.5 * arr_debr
             
-            # theta
+            # drift
             self.drifts[j] = self.newton_raphson(j)
 
             # Tasas
             for i in range(0, j+1):
-                self.rates[i][j+1] = self.rates[i][j] + self.drifts[j]*self.dt - self.volat*np.sqrt(self.dt)
-            self.rates[j+1][j+1] = self.rates[j][j] + self.drifts[j]*self.dt + self.volat*np.sqrt(self.dt)
+                self.r[i][j+1] = self.r[i][j] + self.drifts[j]*self.dt - self.volat*np.sqrt(self.dt)
+            self.r[j+1][j+1] = self.r[j][j] + self.drifts[j]*self.dt + self.volat*np.sqrt(self.dt)
+
+
+def holee_forwards(i: int, j: int, holee: HoLee)-> np.array:
+
+    forwards = np.zeros([holee.N - j + 1])
+    forwards[0] = holee.r[i,j]
+
+    for k in range(1, len(forwards)):
+        forwards[k] = forwards[k-1] + holee.dt*holee.drifts[k-1]
+    
+    return forwards
+
+def holee_spots(i: int, j: int, holee: HoLee, forwards: np.array)-> np.array:
+
+    spots = np.zeros([holee.N - j + 1])
+    spots[0] = 0
+
+    for k in range(1, len(spots)):
+        spots[k] = ((1/(r_to_df(spots[k-1], holee.dt)*r_to_df(forwards[k-1], holee.dt))) - 1)*(1/holee.dt)
+    return spots
