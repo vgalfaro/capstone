@@ -4,13 +4,14 @@ from credit import r_to_df
 class HoLee:
 
     def __init__(self, N: int, initial_r: int, 
-                 dt: float, volat: float, df: float):
+                 dt: float, volat: float, df: np.array):
 
 
         self.N = N
         self.dt = dt
         self.volat = volat
         self.df = df
+        self.payments = int(12*dt)
 
         self.r = np.zeros([self.N + 1, self.N + 1])
         self.arr_debr = np.zeros([self.N + 1, self.N + 1])
@@ -18,12 +19,11 @@ class HoLee:
 
         self.set_initial_values(initial_r)
 
-
     def set_initial_values(self, initial_r):
         
         self.r[0][0] = initial_r
         self.arr_debr[0][0] = 1
-        self.drifts[0] = ((-(2*self.df[1]-1)+np.sqrt(1 + 4 * self.df[1]**2 * self.dt**3 * self.volat**2) )/ (2*self.df[1]*self.dt) - self.r[0][0])/self.dt
+        self.drifts[0] = ((-(2*self.df[1*self.payments]-1)+np.sqrt(1 + 4 * self.df[1*self.payments]**2 * self.dt**3 * self.volat**2) )/ (2*self.df[1*self.payments]*self.dt) - self.r[0][0])/self.dt
 
         self.r[1][1] = self.r[0][0] + self.drifts[0]*self.dt + self.volat*np.sqrt(self.dt)
         self.r[0][1] = self.r[0][0] + self.drifts[0]*self.dt - self.volat*np.sqrt(self.dt)
@@ -43,7 +43,7 @@ class HoLee:
             r = self.r[i][j] + drift*self.dt - s
             value += 0.5*(self.arr_debr[i-1][j] + self.arr_debr[i][j])*r_to_df(r, self.dt)
 
-        value -= self.df[j + 1]
+        value -= self.df[(j + 1)*self.payments]
 
         return value
     
