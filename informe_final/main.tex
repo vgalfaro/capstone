@@ -1,0 +1,184 @@
+\documentclass[a4paper, 12pt]{article} %tipografía y papel
+
+\usepackage[top = 2.5cm, bottom = 2.5cm, left = 2.3cm, right = 2.3cm]{geometry} % margen
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry} % Page size and margins
+\usepackage{amssymb} % Math symbols
+\usepackage{amsmath} % Math symbols
+\usepackage{amsthm} % Math symbols
+\usepackage{empheq} % Math symbols
+\usepackage{booktabs} % Tables
+\usepackage{setspace} % Spaces
+\setlength{\parindent}{0in}
+\usepackage[spanish]{babel}
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+\usepackage{color} % Colors
+\usepackage{bm} % Bold
+\usepackage[bb=dsserif]{mathalpha}% Required for inserting images
+\usepackage{algorithm} % Pseudocode
+\usepackage[noend]{algpseudocode} % Pseudocode
+\usepackage{algpseudocode} % Pseudocode
+\usepackage{fancyhdr} % Pseudocode
+\usepackage{xcolor} % Color
+\usepackage{tcolorbox} % Colorbox
+\usepackage[framemethod=TikZ]{mdframed} % Colorbox
+\usepackage{hyperref}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+%% Commands %%
+% Boxes
+\mdfdefinestyle{definition}{%
+    linecolor=teal!20!white,
+    roundcorner = 4pt,
+    outerlinewidth=1pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
+    innerrightmargin=8pt,
+    innerleftmargin=8pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    backgroundcolor = teal!5!white}
+
+\mdfdefinestyle{theorem}{%
+    linecolor=orange!20!white,
+    roundcorner = 4pt,
+    outerlinewidth=1pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
+    innerrightmargin=8pt,
+    innerleftmargin=8pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    backgroundcolor = orange!5!white}
+
+\mdfdefinestyle{proposition}{%
+    linecolor=gray!20!white,
+    roundcorner = 4pt,
+    outerlinewidth=1pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
+    innerrightmargin=8pt,
+    innerleftmargin=8pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    backgroundcolor = gray!5!white}
+
+\mdfdefinestyle{example}{%
+    linecolor=olive!20!white,
+    roundcorner = 4pt,
+    outerlinewidth=1pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt,
+    innerrightmargin=8pt,
+    innerleftmargin=8pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    backgroundcolor = olive!5!white}
+
+% Environments
+\newcounter{example}[section]
+\newenvironment{example}[3]
+    {\refstepcounter{example}
+    \begin{mdframed}[style=example, nobreak=#1]
+        \textbf{Ejemplo \thesection.\theexample}#2. #3
+    \end{mdframed}
+    }
+
+\newcounter{proposition}[section]
+\newenvironment{proposition}[3]
+    {\refstepcounter{proposition}
+    \begin{mdframed}[style=proposition, nobreak=#1]
+        \textbf{Proposición \thesection.\theproposition}#2. #3
+    \end{mdframed}
+    }
+
+\newenvironment{corolary}[3]
+    {\refstepcounter{proposition}
+    \begin{mdframed}[style=proposition, nobreak=#1]
+        \textbf{Corolario \thesection.\theproposition}#2. #3
+    \end{mdframed}
+    }
+
+\newcounter{definition}[section]
+\newenvironment{definition}[3]
+    {\refstepcounter{definition}
+    \begin{mdframed}[style=definition, nobreak=#1]
+        \textbf{Definición \thesection.\thedefinition}#2. #3
+    \end{mdframed}
+    }
+
+\newcounter{theorem}[section]
+\newenvironment{theorem}[3]
+    {\refstepcounter{theorem}
+    \begin{mdframed}[style=theorem, nobreak=#1]
+        \textbf{Teorema \thesection.\thetheorem}#2. #3
+    \end{mdframed}
+    }
+
+     %%%%%%%%%% MODIFICAR %%%%%%%%%%
+\newcommand{\departamento}{Instituto de Ingeniería Matemática y Computacional }
+\newcommand{\ramo}{Taller de Matemáticas Aplicadas (Capstone) }
+\newcommand{\sigla}{IMT2116 }
+\newcommand{\titulo}{Informe de Medio Semestre }
+\newcommand{\semestre}{02 }
+\newcommand{\anio}{2025 }
+\newcommand{\profe}{Alejandro Cataldo -- Daniel Zúñiga }
+\newcommand{\nombre}{Vicente Alfaro, Cristian Chávez, Bruno Parra}
+
+%% Document %%
+
+% \pagestyle{fancy} % With this command we can customize the header style.
+% \fancyhf{} 
+% \lhead{\footnotesize \sigla - \titulo}
+% \rhead{\footnotesize \nombre}
+% \cfoot{\footnotesize \thepage}
+
+\begin{document}
+\thispagestyle{empty} % This command disables the header on the first page.
+\begin{minipage}{2cm}
+\vspace{-1.5cm}
+\includegraphics[width=2cm]{images/logo.pdf}
+\vspace{-1.4cm}
+\end{minipage}
+\begin{minipage}{\linewidth}
+\raggedright \footnotesize
+\textsc{Profesor: \profe\\
+\sigla - \ramo \\
+\departamento}
+\end{minipage}
+\vspace{0.5cm}
+
+\vspace*{8cm}
+\begin{center} 
+	{\huge \bf \titulo}\\
+	\vspace{2mm}
+	{\bf \nombre}\\
+        \vspace{1mm}
+        {13 de octubre de 2025}
+\end{center}
+\newpage
+
+\section{Introducción}
+\input{Sections/introduccion.tex}
+
+\section{Objetivos del Proyecto}
+\input{Sections/propuesta.tex}
+
+\section{Descripción y Procesamiento de los Datos}
+\input{Sections/metodologia.tex}
+
+\section{Modelo Propuesto}
+\input{Sections/modelo.tex}
+
+\section{Resultados}
+\subsection{Entregables}
+
+\section{Conclusiones y Tareas Futuras}
+\input{Sections/gantt.tex}
+
+\newpage
+\input{Sections/biblio.tex}
+
+\end{document}

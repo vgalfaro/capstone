@@ -1,0 +1,26 @@
+\subsection{Contexto Organizacional}
+El presente trabajo se desarrolla en el contexto de la banca corporativa y de personas del Banco Itaú Chile, una de las principales instituciones financieras del país. El proyecto aborda una problemática relevante para la gestión del balance del banco: la valoración del riesgo de mercado implícito en la oferta de créditos a largo plazo con posibilidad de prepago. 
+
+\subsection{Problema de Negocio}
+
+Una de las actividades del banco consiste en la intermediación financiera, capta recursos (pasivos) y los ofrece en forma de préstamos (activos). Para gestionar el riesgo asociado a la tasa de interés, la institución busca calzar la duración de sus activos y pasivos. 
+
+Sin embargo, esta estabilidad se ve amenazada por el riesgo de prepago. Cuando las tasas de interés de mercado disminuyen, los clientes tienen un incentivo racional para prepagar su deuda actual y refinanciarse a una tasa menor. Financieramente, esto equivale a que el deudor ejerza una opción de compra sobre el bono que constituye su deuda.
+
+La ejecución de esta opción genera un perjuicio económico para el banco, conocido como 
+riesgo de reinversión o descalce de balance: 
+\begin{enumerate}
+    \item El banco recibe el capital prepagado y deja de percibir los flujos futuros pactados a la tasa original.
+    \item El banco debe reinvertir el capital a una tasa de interés menor, reduciendo sus ingresos futuros.
+    \item A su vez, el banco debe seguir pagando sus pasivos a la tasa original pactada, generando un descalce entre los ingresos y egresos futuros.
+\end{enumerate}
+
+\subsection{Motivación y Estado Actual}
+
+Actualmente, para créditos mayores a 5.000 UF se pacta una clausula de prepago entre las contrapartes. Para créditos menores, el banco asume el riesgo de prepago sin protección contractual, ya que este se rige por la ley 18.010 que establece un valor máximo para la penalización por prepago de un mes y medio de intereses calculado sobre el capital que se prepaga \cite{ley_prepago}(CITARRR). 
+
+Para mitigar este riesgo, el banco utiliza heurísticas conservadoras, se estima la vida media del crédito y aplicar un \textit{spread} a la tasa de interés ofrecida al cliente para compensar la posible pérdida futura. 
+
+Esta metodología presenta dos desventajas como lo son la ineficiencia en la asignación de precios y la gestión de riesgo imprecisa. Respecto a la primera, se corre el riesgo de sobreestimar el riesgo de prepago y ofrecer tasas más altas, restando competitividad al banco. En cuanto a la segunda, este modelo no permite cuantificar  como varía el riesgo de esta opcionalidad ante aumentos de la volatilidad en las tasas de mercado. 
+
+Es por ello que se busca implementar un modelo que permita valorar de forma más precisa el riesgo de prepago, optimizando la asignación de precios y mejorando la gestión del riesgo de mercado.
