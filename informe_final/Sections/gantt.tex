@@ -1,9 +1,18 @@
 
-\subsection{Entregables}
+Después de implementar el modelo, es posible extraer conclusiones relevantes acerca de su factibilidad y de los límites que presenta en la práctica. En primer lugar, se confirma que el modelo es factible, dado que fue implementado en Python con éxito, generando resultados consistentes y calibrados al contexto del mercado chileno. Esto demuestra que la metodología aplicada puede adaptarse a entornos reales y entregar información útil para la toma de decisiones financieras.
 
-Los entregables fueron acordados con la contraparte del banco considerando los objetivos del proyecto.
+
+No obstante, es importante reconocer las limitaciones inherentes. Una de las principales simplificaciones consiste en asumir una volatilidad constante, lo cual dista de la realidad, ya que los mercados presentan variaciones dinámicas y complejas que no pueden ser capturadas plenamente bajo este supuesto. Esta restricción reduce la capacidad del modelo para reflejar escenarios más cercanos al comportamiento real de los activos.
+
+
+Asimismo, el enfoque de un solo factor implica que únicamente se controla el riesgo de mercado. Si bien esto aporta una primera aproximación, deja fuera otros elementos relevantes. La incorporación de un modelo de dos factores permitiría ampliar el análisis, integrando riesgos específicos como el costo de fondeo, lo que enriquecería la evaluación y otorgaría mayor robustez a las conclusiones obtenidas.
+
+Tras validar la factibilidad del modelo y reconocer sus limitaciones, los próximos pasos apuntan a fortalecer su precisión y alcance:
+
 \begin{itemize}
-    \item Paquete de datos para la calibración del modelo, curvas 0 cupón de las curvas swap cámara peso.
-    \item Notebook reproducible con el modelo de Ho-Lee extendido calibrado al set de datos anteriores.
-    \item Informe técnico de cómo usar este modelo y límites de aplicación.
+    \item La implementación del modelo Ho–Lee extendido permitirá una mejor representación de la estructura temporal de tasas.
+    \item Incorporar más tipos de créditos ampliará la cobertura del análisis.
+    \item Migrar a un modelo de dos factores será clave para capturar no solo el riesgo de mercado, sino también el riesgo específico de ITAÚ, como el costo de fondeo.
+    \item Estudiar la estabilidad del precio de la opción con volatilidad histórica permitirá evaluar la robustez del modelo ante escenarios reales y dinámicos.
 \end{itemize}
+

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.17)  7 DEC 2025 19:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.17)  7 DEC 2025 20:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -829,7 +829,7 @@ LaTeX Info: Redefining \nameref on input line 138.
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-<images/logo.pdf, id=123, 240.9pt x 321.2pt>
+<images/logo.pdf, id=131, 240.9pt x 321.2pt>
 File: images/logo.pdf Graphic file (type pdf)
 <use images/logo.pdf>
 Package pdftex.def Info: images/logo.pdf  used on input line 142.
@@ -853,24 +853,24 @@ Overfull \hbox (59.51599pt too wide) in paragraph at lines 140--152
 LaTeX Warning: Citation `ley_prepago' on page 2 undefined on input line 20.
 
 ) (./Sections/propuesta.tex [2]) (./Sections/metodologia.tex [3]
-<images/pca.png, id=157, 410.0118pt x 313.6518pt>
+<images/pca.png, id=165, 410.0118pt x 313.6518pt>
 File: images/pca.png Graphic file (type png)
 <use images/pca.png>
 Package pdftex.def Info: images/pca.png  used on input line 22.
 (pdftex.def)             Requested size: 287.00629pt x 219.55475pt.
-<images/seriestemporalesobservadas.png, id=159, 860.9766pt x 425.1885pt>
+<images/seriestemporalesobservadas.png, id=167, 860.9766pt x 425.1885pt>
 File: images/seriestemporalesobservadas.png Graphic file (type png)
 <use images/seriestemporalesobservadas.png>
 Package pdftex.def Info: images/seriestemporalesobservadas.png  used on input line 31.
 (pdftex.def)             Requested size: 387.43588pt x 191.33305pt.
  [4 <./images/pca.png>]
-<images/tasacortatpm.png, id=168, 860.9766pt x 425.1885pt>
+<images/tasacortatpm.png, id=177, 860.9766pt x 425.1885pt>
 File: images/tasacortatpm.png Graphic file (type png)
 <use images/tasacortatpm.png>
 Package pdftex.def Info: images/tasacortatpm.png  used on input line 43.
 (pdftex.def)             Requested size: 387.43588pt x 191.33305pt.
  [5 <./images/seriestemporalesobservadas.png> <./images/tasacortatpm.png>]) (./Sections/modelo.tex
-<images/grafico_Ho_Lee.png, id=181, 724.20563pt x 353.06906pt>
+<images/grafico_Ho_Lee.png, id=189, 724.20563pt x 353.06906pt>
 File: images/grafico_Ho_Lee.png Graphic file (type png)
 <use images/grafico_Ho_Lee.png>
 Package pdftex.def Info: images/grafico_Ho_Lee.png  used on input line 31.
@@ -887,17 +887,23 @@ LaTeX Font Info:    Font shape `U/DSSerif/m/n' will be
 LaTeX Font Info:    Font shape `U/DSSerif/m/n' will be
 (Font)              scaled to size 6.0pt on input line 111.
 ) (./Sections/resultados.tex [9]
-<images/holee_hist.png, id=228, 630.6762pt x 338.9463pt>
+<images/holee_hist.png, id=236, 630.6762pt x 338.9463pt>
 File: images/holee_hist.png Graphic file (type png)
 <use images/holee_hist.png>
 Package pdftex.def Info: images/holee_hist.png  used on input line 9.
 (pdftex.def)             Requested size: 315.33733pt x 169.47273pt.
-<images/holee_ewma.png, id=231, 624.1719pt x 338.9463pt>
+<images/holee_ewma.png, id=239, 624.1719pt x 338.9463pt>
 File: images/holee_ewma.png Graphic file (type png)
 <use images/holee_ewma.png>
 Package pdftex.def Info: images/holee_ewma.png  used on input line 22.
 (pdftex.def)             Requested size: 312.08519pt x 169.47273pt.
- [10 <./images/holee_hist.png>]) (./Sections/gantt.tex) [11 <./images/holee_ewma.png>] (./Sections/biblio.tex) [12] (build/main.aux
+ [10 <./images/holee_hist.png>]
+<images/opcfrances56.png, id=249, 679.338pt x 367.6134pt>
+File: images/opcfrances56.png Graphic file (type png)
+<use images/opcfrances56.png>
+Package pdftex.def Info: images/opcfrances56.png  used on input line 42.
+(pdftex.def)             Requested size: 339.66817pt x 183.80624pt.
+ [11 <./images/holee_ewma.png>]) (./Sections/gantt.tex [12 <./images/opcfrances56.png>]) [13] (./Sections/biblio.tex) [14] (build/main.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
@@ -905,21 +911,21 @@ LaTeX Info: Redefining \% on input line 26.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 4A121186AFECC30A90964929F0E608CC;5310.
+(rerunfilecheck)             Checksum: A8980A49D57C2DA5A11C2E214F8CA42D;5815.
  ) 
 Here is how much of TeX's memory you used:
- 27434 strings out of 478268
- 517700 string characters out of 5846347
- 825355 words of memory out of 5000000
- 45050 multiletter control sequences out of 15000+600000
+ 27452 strings out of 478268
+ 518018 string characters out of 5846347
+ 825526 words of memory out of 5000000
+ 45059 multiletter control sequences out of 15000+600000
  487337 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,8n,104p,843b,437s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/dsserif/DSSerif.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfcc1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on build/main.pdf (12 pages, 2744637 bytes).
+Output written on build/main.pdf (14 pages, 3395063 bytes).
 PDF statistics:
- 346 PDF objects out of 1000 (max. 8388607)
- 282 compressed objects within 3 object streams
- 79 named destinations out of 1000 (max. 500000)
- 280 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 372 PDF objects out of 1000 (max. 8388607)
+ 303 compressed objects within 4 object streams
+ 87 named destinations out of 1000 (max. 500000)
+ 301 words of extra memory for PDF output out of 10000 (max. 10000000)
 
