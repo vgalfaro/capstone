@@ -9,53 +9,48 @@ Para la calibración del modelo, se utilizan dos conjuntos de datos provenientes
     Se extrajo el historial de tasas de cierre diario para los 17 tenores disponibles en el mercado interbancario que van desde 1 mes hasta 25 años. Estos datos fueron obtenidos de Bloomberg, abarcando el periodo desde enero de 2021 hasta septiembre de 2025, conformando una matriz de 1256$\times$ 17 de tipo \textit{float}.
     \item Tasa de política monetaria (TPM): Es la tasa de interés de referencia que el Banco Central determina para influir en el comportamiento de la economía, especialmente en el control de la inflación y la estabilidad de los precios. Esta tasa afecta directamente las tasas de interés que aplican los bancos comerciales y otras instituciones financieras en sus operaciones de crédito y ahorro.
     
-    Se obtuvo el historial de valores diarios de la TPM publicado por el Banco Central, cubriendo el mismo periodo que los contratos swap, resultando en una matriz de 1180$\times$1 de tipo \textit{float}.
+    Se obtuvo el historial de valores diarios de la TPM publicado por el Banco Central, cubriendo el mismo periodo que los contratos Swap, resultando en una matriz de 1180$\times$1 de tipo \textit{float}.
 \end{enumerate}
 Se seleccionó este periodo temporal debido a la introducción de los contratos de 1 y 2 meses en 2021, fundamentales en la construcción del modelo de Ho--Lee. 
 \subsection{Procesamiento: Construcción de la Curva Cupón Cero}
 
 \subsection{PCA}
-Para validar la hipótesis de que un modelo de un factor (Ho--Lee) es adecuado para modelar la curva de tasas de interés, se realizó un Análisis de Componentes Principales sobre las tasas swap cero cupón. Litterman y Scheinkman (1991) demostraron que las variaciones en la curva de rendimientos pueden ser explicadas principalmente por tres factores: nivel, pendiente y curvatura, donde el primero explicaría el 96\% de la variabilidad, por lo tanto, si el primer componente principal explica una proporción significativa de la varianza total, se puede justificar el uso de un modelo de un factor (CITARRRR EL PAPER).
-\subsection{Tasa Corta}
-% \qquad Actualmente, a nivel nacional, existen 17 tipos de contratos swap 
-% transados entre los bancos los cuales son los siguientes:
-% \begin{table}[H]
-% \centering
+Para validar la hipótesis de que un modelo de un factor (Ho--Lee) es adecuado para modelar la curva de tasas de interés, se realizó un Análisis de Componentes Principales sobre las tasas swap cero cupón. Litterman y Scheinkman (1991) demostraron que las variaciones en la curva de rendimientos pueden ser explicadas principalmente por tres factores: nivel, pendiente y curvatura, donde el primero explicaría el 96\% de la variabilidad, por lo tanto, si el primer componente principal explica una proporción significativa de la varianza total, se puede justificar el uso de un modelo de un factor \cite{pca}.
 
-%     \begin{tabular}{| c | c |}
-%     \hline
-%     Plazo & Abreviación Bloomberg \\ \hline
-%     1 mes & CHSWPA \\ \hline
-%     2 meses & CHSWPB \\ \hline
-%     3 meses & CHSWPC \\ \hline
-%     6 meses & CHSWPF \\ \hline
-%     9 meses & CHSWPI \\ \hline
-%     1 año & CHSWP1 \\ \hline
-%     1 año y 6 meses & CHSWP1F \\ \hline
-%     2 años & CHSWP2 \\ \hline
-%     3 años & CHSWP3 \\ \hline
-%     4 años & CHSWP4 \\ \hline
-%     5 años & CHSWP5 \\ \hline
-%     7 años & CHSWP7 \\ \hline
-%     10 años & CHSWP10 \\ \hline
-%     12 años & CHSWP12 \\ \hline
-%     15 años & CHSWP15 \\ \hline
-%     20 años & CHSWP20 \\ \hline
-%     25 años & CHSWP25 \\ \hline
-% \end{tabular}
-% \caption{Los 17 contratos IRS en Chile}\label{fig:tenores}
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.7]{images/pca.png}
+    \caption{Varianza explicada por cada componente principal
+    }\label{fig:varpca}
+\end{figure}
 
-% \end{table}
+Los resultados indican que las dos primeras componentes explican el 98.4\% de la variabilidad total de las tasas Swap cero cupón, la primera componente explica el 81.5\% de la variabilidad y la segunda un 16.9\%, lo cual difiere a lo planteado por Litterman y Scheinkman (1991). Este resultado no invalida el modelo, sino que refleja el contexto económico particular del periodo 2021-2025, que incluye una pandemia mundial y una alza en la inflación. La agresividad del Banco Central con el aumento de la TPM en un corto plazo provocó un desacople entre las tasas cortas y las tasas largas, lo que se refleja en la mayor relevancia del factor pendiente en la explicación de la variabilidad.
 
-
-\qquad Como ya se dijo anteriormente, entender como se comportarán los valores de estos contratos a futuro es fundamental para entender el costo de oportunidad del banco. Y así, poder valorizar opciones de prepago.
 \begin{figure}[H]
   \centering
       \includegraphics[scale=0.45]{images/seriestemporalesobservadas.png}
-  \caption{Valores históricos de los 17 contratos SWAP en CLP
-  }\label{fig:0cupon}
+  \caption{Valores históricos de los 17 contratos Swap en CLP
+  }\label{fig:curvasobservadas}
+\end{figure}
+Podemos observar el fenómeno del desacople en la figura \ref{fig:curvasobservadas}, donde las tasas de corto plazo (1M, 2M, 3M) muestran un comportamiento diferente al de las tasas de largo plazo (10Y, 15Y, 20Y, 25Y), especialmente durante los periodos de ajuste de la TPM por parte del Banco Central.
+
+\subsection{La Tasa Corta}
+
+Para la calibración de un modelo de tasas, es necesario definir una variable que capture de manera adecuada el comportamiento de la curva de tasas de interés. Dado el análisis previo, se opta por utilizar la tasa corta (1M) como variable a modelar a través de un modelo de un factor, específicamente el modelo de Ho--Lee.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.45]{images/tasacortatpm.png}
+    \caption{Tasa corta (1M) vs TPM
+    }\label{fig:tasacortavstpm}
 \end{figure}
 
+De la figura \ref{fig:tasacortavstpm} se desprenden tres puntos importantes que aportan a la elección de la tasa corta como variable del modelo:
+\begin{enumerate}
+    \item Naturaleza de mercado: La TPM es una tasa de política monetaria fija por el Banco Central, mientras que la tasa Swap 1M incorpora diariamente las expectivas de movimientos futuros de la TPM y otros factores de mercado.
+    \item Anticipación a cambios: Se evidencia como la tasa corta tiende a anticipar los movimientos de la TPM, subiendo antes de que el Banco Central realice un ajuste y bajando después.
+    \item Correlación: Existe una alta correlación entre la tasa corta y la TPM, lo que valida su uso como tasa base para el modelo de tasas de interés.
+\end{enumerate}
 \section{Exploración y Procesamiento de los Datos}
 \subsection{Normalización}
 
@@ -111,7 +106,7 @@ $$r_{30 \text{M}} = \dfrac{r_{2 \text{Y}} + r_{3 \text{Y}}}{2}.$$
     \caption{Curva de tasas cero cupón
     }\label{fig:0cupon}
 \end{figure}
-\subsection{PCA}
+
 \qquad Una vez que todos los contratos están normalizados a tasas cero cupón, 
 es posible 
 comparar los datos entre sí. Sin embargo, sigue existiendo el problema de la 
@@ -131,16 +126,3 @@ Al realizar PCA obtuvimos que las primeras 2 componentes explican el 98\% de la 
     \caption{Varianza explicada por cada componente principal
     }\label{fig:varpca}
 \end{figure}
-\subsection{La tasa corta}
-\qquad A pesar de que la primera componente no explicó de forma esperada la variabilidad de la muestra, podemos interpretar esta componente como la tasa corta (1M), pues esto se debe a fenómenos relacionados al contexto de la muestra y que al variar el nivel de la tasa corta, esta sigue controlando y captura de buena manera el comportamiento de los 17 tenores. En el siguiente gráfico podemos observar la correlación entre la tasa corta (1M) junto a la TPM, notando como la tasa corta sigue de buena manera el comportamiento de la TPM.
-\begin{figure}[H]
-    \centering
-        \includegraphics[scale=0.45]{images/tasacortatpm.png}
-    \caption{Tasa corta (1M) vs TPM
-    }\label{fig:varpca}
-\end{figure}
-Por la naturaleza de la TPM, el mercado busca anticiparse a los cambios de la TPM, esto provoca ese efecto “serrucho”, donde la tasa corta (1M) sube antes que la TPM y baja después de la TPM. 
-
-Dado que la tasa corta (1M) explica gran parte de la variabilidad 
-de los datos y que tiene sentido económico, se decidió utilizar 
-esta tasa para calibrar el modelo.

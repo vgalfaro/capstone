@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.17)  7 DEC 2025 15:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.17)  7 DEC 2025 17:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/vicentealfaro/Documents/Ingenieria/8_semestre/capstone/informe_final/main.tex
-(/Users/vicentealfaro/Documents/Ingenieria/8_semestre/capstone/informe_final/main.tex
+**/Users/vicentealfaro/Documents/Ingenieria/8_semestre/capstone/capstone/informe_final/main.tex
+(/Users/vicentealfaro/Documents/Ingenieria/8_semestre/capstone/capstone/informe_final/main.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24> (/usr/local/texlive/2022/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
@@ -743,9 +743,6 @@ LaTeX Warning: Label `fig:0cupon' multiply defined.
 LaTeX Warning: Label `fig:0cupon' multiply defined.
 
 
-LaTeX Warning: Label `fig:0cupon' multiply defined.
-
-
 LaTeX Warning: Label `fig:varpca' multiply defined.
 
 )
@@ -842,7 +839,7 @@ LaTeX Info: Redefining \nameref on input line 138.
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-<images/logo.pdf, id=135, 240.9pt x 321.2pt>
+<images/logo.pdf, id=127, 240.9pt x 321.2pt>
 File: images/logo.pdf Graphic file (type pdf)
 <use images/logo.pdf>
 Package pdftex.def Info: images/logo.pdf  used on input line 142.
@@ -866,63 +863,64 @@ Overfull \hbox (59.51599pt too wide) in paragraph at lines 140--152
 LaTeX Warning: Citation `ley_prepago' on page 2 undefined on input line 20.
 
 ) (./Sections/propuesta.tex [2]) (./Sections/metodologia.tex [3]
-<images/seriestemporalesobservadas.png, id=168, 860.9766pt x 425.1885pt>
-File: images/seriestemporalesobservadas.png Graphic file (type png)
-<use images/seriestemporalesobservadas.png>
-Package pdftex.def Info: images/seriestemporalesobservadas.png  used on input line 54.
-(pdftex.def)             Requested size: 387.43588pt x 191.33305pt.
- [4 <./images/seriestemporalesobservadas.png>]
-<images/diagrama_contratos_cero_cupon.png, id=177, 953.81343pt x 199.49532pt>
-File: images/diagrama_contratos_cero_cupon.png Graphic file (type png)
-<use images/diagrama_contratos_cero_cupon.png>
-Package pdftex.def Info: images/diagrama_contratos_cero_cupon.png  used on input line 69.
-(pdftex.def)             Requested size: 429.21208pt x 89.77205pt.
-<images/diagrama_contratos_semestrales.png, id=178, 952.30782pt x 200.24812pt>
-File: images/diagrama_contratos_semestrales.png Graphic file (type png)
-<use images/diagrama_contratos_semestrales.png>
-Package pdftex.def Info: images/diagrama_contratos_semestrales.png  used on input line 77.
-(pdftex.def)             Requested size: 428.53456pt x 90.11082pt.
- [5 <./images/diagrama_contratos_cero_cupon.png> <./images/diagrama_contratos_semestrales.png>]
-<images/seriestemporales0cupon.png, id=198, 860.9766pt x 425.4294pt>
-File: images/seriestemporales0cupon.png Graphic file (type png)
-<use images/seriestemporales0cupon.png>
-Package pdftex.def Info: images/seriestemporales0cupon.png  used on input line 110.
-(pdftex.def)             Requested size: 387.43588pt x 191.44145pt.
-<images/pca.png, id=200, 410.0118pt x 313.6518pt>
+<images/pca.png, id=161, 410.0118pt x 313.6518pt>
 File: images/pca.png Graphic file (type png)
 <use images/pca.png>
-Package pdftex.def Info: images/pca.png  used on input line 130.
+Package pdftex.def Info: images/pca.png  used on input line 22.
 (pdftex.def)             Requested size: 287.00629pt x 219.55475pt.
- [6 <./images/seriestemporales0cupon.png>]
-<images/tasacortatpm.png, id=209, 860.9766pt x 425.1885pt>
+<images/seriestemporalesobservadas.png, id=163, 860.9766pt x 425.1885pt>
+File: images/seriestemporalesobservadas.png Graphic file (type png)
+<use images/seriestemporalesobservadas.png>
+Package pdftex.def Info: images/seriestemporalesobservadas.png  used on input line 31.
+(pdftex.def)             Requested size: 387.43588pt x 191.33305pt.
+ [4 <./images/pca.png>]
+<images/tasacortatpm.png, id=172, 860.9766pt x 425.1885pt>
 File: images/tasacortatpm.png Graphic file (type png)
 <use images/tasacortatpm.png>
-Package pdftex.def Info: images/tasacortatpm.png  used on input line 138.
+Package pdftex.def Info: images/tasacortatpm.png  used on input line 43.
 (pdftex.def)             Requested size: 387.43588pt x 191.33305pt.
- [7 <./images/pca.png> <./images/tasacortatpm.png>]) (./Sections/modelo.tex
-<images/grafico_Ho_Lee.png, id=220, 724.20563pt x 353.06906pt>
+ [5 <./images/seriestemporalesobservadas.png> <./images/tasacortatpm.png>]
+<images/diagrama_contratos_cero_cupon.png, id=184, 953.81343pt x 199.49532pt>
+File: images/diagrama_contratos_cero_cupon.png Graphic file (type png)
+<use images/diagrama_contratos_cero_cupon.png>
+Package pdftex.def Info: images/diagrama_contratos_cero_cupon.png  used on input line 64.
+(pdftex.def)             Requested size: 429.21208pt x 89.77205pt.
+<images/diagrama_contratos_semestrales.png, id=185, 952.30782pt x 200.24812pt>
+File: images/diagrama_contratos_semestrales.png Graphic file (type png)
+<use images/diagrama_contratos_semestrales.png>
+Package pdftex.def Info: images/diagrama_contratos_semestrales.png  used on input line 72.
+(pdftex.def)             Requested size: 428.53456pt x 90.11082pt.
+ [6 <./images/diagrama_contratos_cero_cupon.png> <./images/diagrama_contratos_semestrales.png>]
+<images/seriestemporales0cupon.png, id=197, 860.9766pt x 425.4294pt>
+File: images/seriestemporales0cupon.png Graphic file (type png)
+<use images/seriestemporales0cupon.png>
+Package pdftex.def Info: images/seriestemporales0cupon.png  used on input line 105.
+(pdftex.def)             Requested size: 387.43588pt x 191.44145pt.
+ [7 <./images/seriestemporales0cupon.png>]
+File: images/pca.png Graphic file (type png)
+<use images/pca.png>
+Package pdftex.def Info: images/pca.png  used on input line 125.
+(pdftex.def)             Requested size: 287.00629pt x 219.55475pt.
+) (./Sections/modelo.tex [8]
+<images/grafico_Ho_Lee.png, id=224, 724.20563pt x 353.06906pt>
 File: images/grafico_Ho_Lee.png Graphic file (type png)
 <use images/grafico_Ho_Lee.png>
 Package pdftex.def Info: images/grafico_Ho_Lee.png  used on input line 31.
 (pdftex.def)             Requested size: 362.10193pt x 176.53409pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[8] [9 <./images/grafico_Ho_Lee.png>] [10]
+ [9 <./images/grafico_Ho_Lee.png>] [10]
 LaTeX Font Info:    Font shape `U/DSSerif/m/n' will be
 (Font)              scaled to size 12.0pt on input line 111.
 LaTeX Font Info:    Font shape `U/DSSerif/m/n' will be
 (Font)              scaled to size 8.0pt on input line 111.
 LaTeX Font Info:    Font shape `U/DSSerif/m/n' will be
 (Font)              scaled to size 6.0pt on input line 111.
-) (./Sections/gantt.tex
-<images/gantt.png, id=248, 1254.6875pt x 547.04375pt>
+ [11]) (./Sections/gantt.tex
+<images/gantt.png, id=253, 1254.6875pt x 547.04375pt>
 File: images/gantt.png Graphic file (type png)
 <use images/gantt.png>
 Package pdftex.def Info: images/gantt.png  used on input line 5.
 (pdftex.def)             Requested size: 419.95967pt x 183.10428pt.
- [11]) [12 <./images/gantt.png>] (./Sections/biblio.tex) [13] (build/main.aux
+ [12]) [13 <./images/gantt.png>] (./Sections/biblio.tex) [14] (build/main.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
@@ -933,21 +931,21 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9B37FBE3B9C7FE46BBCE7A655710A35F;5133.
+(rerunfilecheck)             Checksum: 656AAFB12A8E8AEB8BEA79B5C049EBDC;4949.
  ) 
 Here is how much of TeX's memory you used:
- 27445 strings out of 478268
- 518241 string characters out of 5846347
- 825048 words of memory out of 5000000
+ 27448 strings out of 478268
+ 518287 string characters out of 5846347
+ 822199 words of memory out of 5000000
  45056 multiletter control sequences out of 15000+600000
  488036 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,8n,104p,762b,437s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,8n,104p,843b,437s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/dsserif/DSSerif.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfcc1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on build/main.pdf (13 pages, 2434318 bytes).
+Output written on build/main.pdf (14 pages, 2435260 bytes).
 PDF statistics:
- 377 PDF objects out of 1000 (max. 8388607)
- 303 compressed objects within 4 object streams
- 85 named destinations out of 1000 (max. 500000)
- 314 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 380 PDF objects out of 1000 (max. 8388607)
+ 305 compressed objects within 4 object streams
+ 88 named destinations out of 1000 (max. 500000)
+ 298 words of extra memory for PDF output out of 10000 (max. 10000000)
 
