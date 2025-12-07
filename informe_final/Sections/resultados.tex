@@ -1,0 +1,28 @@
+
+\subsection{Calibración del Modelo de Tasas}
+Antes de valorar la opción, es fundamental validar que el modelo de tasas replica correctamente las condiciones del mercado. 
+\subsubsection{Construcción del Árbol de Ho--Lee}
+Se implementó el árbol binomial de Ho--Lee calibrado a la curva Swap Cámara Promedio vigente al 15 de septiembre de 2025. 
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.5]{images/holee_hist.png}
+    \caption{Árbol de tasas cortas generado por el modelo de Ho-Lee a 5 años plazo. La línea azul representa el valor esperado de la tasa en el plazo t.
+    }\label{fig:holeetreestd}
+\end{figure}
+
+A diferencia de modelos normales simples que pueden arrojar tasas negativas con alta probabilidad en plazos largos, la calibración realizada con la volatilidad actual ($\sigma\approx$10.06 bps, calculada vía desviación estándar de la muestra solo en 2025) muestra un comportamiento robusto. Como se observa en la Figura \ref{fig:holeetreestd}, la dispersión de tasas a 5 años se mantiene en rangos coherentes con la historia reciente (entre 3.5\% y 7.0\%).
+
+\subsubsection{Impacto de la Volatilidad en la Estructura del Árbol}
+
+Para evaluar la sensibilidad del modelo a la estimación de la volatilidad, se generó un escenario alternativo con una volatilidad histórica de mayor plazo ($\sigma\approx$16.84 bps, calculada vía EWMA desde 2021). Es posible observar como el árbol se "abre" significativamente más, capturando escenarios extremos para tasas más altas y bajas (ver Figura \ref{fig:holeetreeewma}), 
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.5]{images/holee_ewma.png}
+    \caption{Árbol de tasas bajo un escenario de mayor volatilidad. Se aprecia una mayor dispersión de los nodos terminales.
+    }\label{fig:holeetreeewma}
+\end{figure}
+
+\subsection{Valoración de la Opción de Prepago}
+
