@@ -1,9 +1,38 @@
-A continuación se describe el modelo estructurado en 2 partes: en la sección \ref{seccion-holee} se describirá el modelo de tasas usado y cada paso para su obtención; mientras que en la sección \ref{seccion-valoracion} se tomará el modelo de tasas anterior como un \textit{input} para finalmente asignarle un valor a la opcionalidad de prepago.
+La estructura de la siguiente sección consiste en 2 partes principales: Primero se describe el modelo de tasas a utilizar, para lo cual se comenta parte de la teoría necesaria en \ref{modelo-mat} y su aplicación en la sección \ref{seccion-holee}. Luego de esto se utilizará el árbol calibrado como un \textit{input} para finalmente asignarle un valor a la opcionalidad de prepago en la sección \ref{seccion-valoracion}.
 
-\subsection{Implementación Ho-Lee}
+\subsection{Modelo Ho-Lee}\label{modelo-mat}
+
+Este modelo es un caso particular del marco Heath, Jarrow y Morton (HJM), en el que las tasas de interés a corto plazo se modelan como un proceso estocástico lineal:
+\begin{equation}
+    dr(t) = \theta(t)\,dt + \sigma\,dW(t),
+\end{equation}
+donde $\mu$ es el \emph{drift} (o tendencia central) del modelo, $r(t)$ es la tasa instantánea en el tiempo $t$, $\theta(t)$ es un término determinista que asegura el ajuste a la curva de tasas inicial, $\sigma$ es la volatilidad que para este modelo se asume constante y $W(t)$ es un movimiento browniano estándar, que es una variable aleatoria que representa un movimiento casi seguramente no diferenciable; su distribución tiene media cero y varianza proporcional al intervalo de tiempo $t$. La adición de este componente de incertidumbre permite modelar de manera más realista el mercado financiero, donde el riesgo es una parte importante de la toma de decisiones.
+
+\subsubsection{Versión discreta del modelo}
+
+En su versión discreta, el modelo se escribe como
+\begin{equation}
+    r_{t+\Delta t} = r_t + \theta_t\,\Delta t + \sigma \sqrt{\Delta t}\,\varepsilon_t,
+\end{equation}
+donde $\varepsilon_t \sim \mathcal{N}(0,1)$ es una variable aleatoria normal estándar (proviene de discretizar el movimiento browniano) y $\Delta t$ es el tamaño del paso temporal. Esta formulación es especialmente útil para simulaciones numéricas y para la valoración de instrumentos financieros en árboles binomiales, como se hizo en este trabajo.
+
+Con la modelación anterior para $r_{t+\Delta t}$, se generan distintas posibilidades para la tasa en cada paso de tiempo, dando origen a árboles como el de la Figura \ref{fig:arbolHL}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{images/grafico_Ho_Lee.png}
+    \caption{Ejemplo de árbol generado por el modelo de Ho--Lee.}
+    \label{fig:arbolHL}
+\end{figure}
+
+La modelación escogida ofrece diversas ventajas relevantes para su implementación práctica. En primer lugar la versión discreta facilita la implementación computacional, especialmente para bonos y derivados, además de reducir los tiempos de cómputo. A su vez la elección de un modelo de tasas permite su calibración a los precios del mercado observados, en contraste con un modelo de equilibrio que no tiene esta propiedad.
+
+Al construir un árbol binomial para este modelo, se trabaja bajo la medida libre de riesgo donde los activos crecen en promedio a la tasa libre de riesgo por lo que se valoran únicamente con su esperanza. Luego al discretizar el movimiento browniano queremos que siga teniendo media cero (para que la esperanza del término aleatorio sea cero), luego el valor de $p$ mostrado en la Figura \ref{fig:arbolHL} necesariamente tiene que ser $p=1/2$, lo que será utilizado más adelante.
+
+\subsection{Implementación Ho-Lee}\label{seccion-holee}
 \subsubsection{Precios Arrow-Debreu}
 
-Un seguro Arrow-Debreu es un áctivo que tiene un flujo de $\$1$ si un particular estado de las tasas se cumple, o $\$0$ en otro caso. Denotamos como $Q_{ij}$ el precio del seguro en tiempo 0 si es que en el periodo $j$ se cumple el estado $i$, es decir, $r_j = r_{ij}$. Debido a que se puede considerar un bono cero cupón como un portafolio de seguros Arrow-Debreu, se cumple la siguiente propiedad
+Un seguro Arrow-Debreu es un activo que tiene un flujo de $\$1$ si un particular estado de las tasas se cumple, o $\$0$ en otro caso. Denotamos como $Q_{ij}$ el precio del seguro en tiempo 0 si es que en el periodo $j$ se cumple el estado $i$, es decir, $r_j = r_{ij}$. Debido a que se puede considerar un bono cero cupón como un portafolio de seguros Arrow-Debreu, se cumple la siguiente propiedad
 \begin{equation}
     DF(0, \Delta t j) = \sum_{i=0}^j Q_{ij}.
 \end{equation}
@@ -22,12 +51,11 @@ Suponiendo que ya tenemos $Q_{ik}$ para $i = 0,...,k$ y $k = 0,...,j-1$. Procede
     \end{array}
 \end{equation}
 Así, generamos un árbol de precios Arrow-Debreu.
-
 \subsubsection{Volatilidad}
 
-Este parámetro representa lo que es el riesgo en el mercado; es decir, que magnitud puede tener un cambio repentino dentro de la serie de tasas y, cómo se analizará en las conclusiones, tiene un alto impacto en los resultados generados
+Este parámetro representa lo que es el riesgo en el mercado; es decir, que magnitud puede tener un cambio repentino dentro de la serie de tasas y, cómo se analizará en las conclusiones, tiene un alto impacto en los resultados generados. Dado que este parámetro define tan drásticamente el \textit{output} del modelo, se experimentó con más de una forma para obtenerla.
 
-Este cálculo se realiza moviendo la varianza $\sigma^2$ a lo largo de los datos que se poseen, dándole más importancia a las entradas más recientes. Entre cada par de puntos de la serie de datos $r$ se puede calcular una volatilidad local como $\sigma_{l,i}(r_{i+1} - r_{i})^2$, luego desde el inicio de los datos ($i = 0$) se puede calcular la volatilidad móvil como
+El primer método de cálculo se llama EWMA por sus siglas en inglés (\textit{Exponentially Weighted Moving Average}) y realiza moviendo el horizonte temporal a lo largo de los datos que se poseen para calcular $\sigma^2$, dándole más importancia a las entradas más recientes. Entre cada par de puntos de la serie de datos $r$ se puede calcular una volatilidad local como $\sigma_{l,i}(r_{i+1} - r_{i})^2$, luego desde el inicio de los datos ($i = 0$) se puede calcular la volatilidad móvil como
 
 \begin{equation}
     \sigma^2(i)= \beta\cdot \sigma^2(i-1) + (1-\beta)\cdot (r_{i+1} - r_{i})^2
@@ -37,7 +65,13 @@ donde $\beta$ es un factor de decaimiento que representa cuanto peso se le da a 
 
 Finalmente para obtener la volatilidad (o desviación estándar) se termina el cálculo $\sigma = \sqrt{\sigma^2}$ donde la raiz se calcula elemento a elemento.
 
-\subsubsection{Calibrando el árbol}
+El método descrito anteriormente permite obtener un array de volatilidades móviles para cada intervalo de tiempo. Luego de realizar este procedimiento se puede considerar la volatilidad spot, que es la última entrada de este array. El hecho de obtener una volatilidad $\sigma(t)$ en vez de una constante $\sigma$ permitirá en un futuro generalizar a un modelo de Ho-Lee extendido, que considera una volatilidad variable en el tiempo.
+
+Otro método más común que también fue usado para calcular la volatilidad es considerar la desviación estándar de toda la muestra.
+
+Cabe destacar que la volatilidad será considerada como un dato dado al calibrar el árbol de tasas.
+
+\subsubsection{Calibración del Árbol}
 El árbol de tasas Ho-Lee se va llenando de manera inductiva en conjunto con el árbol de precios Arrow-Debreu, el cual es de ayuda para calcular los \textit{drifts} $(\theta_j)_{0 \leq j \leq N-1}$. El primer paso es calcular $\theta_0$ usando el factor de descuento $DF(0, \Delta t)$
 
 \begin{equation}
@@ -56,7 +90,7 @@ Podemos obtener la siguiente expresión cerrada para $\theta_0$
 - r_{00}\right)
 \end{equation}
 
-Con la cual podemos calcular $r_{01}$ y $r_{11}$ utilizando $(5)$ y consecuentemente $Q_{01}$ y $Q_{01}$ utilizando $(2)$. Ahora, asumamos que ya conocemos $\theta_k$ para $k = 0,...,j-1$, $r_{ik} y Q_{ik}$ para $i = 0,...,k$ y $k = 0,...,j$. Es posible calcular $\theta_j$, $r_{i,j+1}$ y $Q_{i,j+1}$ para $i = 1,...,j+1$ de la siguiente manera: utilizamos la siguiente identidad para poder despejar $\theta_j$
+Con la cual podemos calcular $r_{01}$ y $r_{11}$ utilizando $(11)$ y consecuentemente $Q_{01}$ y $Q_{01}$ utilizando $(7)$. Ahora, asumamos que ya conocemos $\theta_k$ para $k = 0,...,j-1$, $r_{ik} y Q_{ik}$ para $i = 0,...,k$ y $k = 0,...,j$. Es posible calcular $\theta_j$, $r_{i,j+1}$ y $Q_{i,j+1}$ para $i = 1,...,j+1$ de la siguiente manera: utilizamos la siguiente identidad para poder despejar $\theta_j$
 \begin{equation}
 \begin{array}{ll}
     DF(0,(j+1)\Delta t) & = \dfrac{1}{2} Q_{0j} \dfrac{1}{1 + (r_{0j} + \theta_j \Delta t - \sigma \sqrt{\Delta t})\frac{\Delta t}{360}} \\ \\
@@ -64,16 +98,16 @@ Con la cual podemos calcular $r_{01}$ y $r_{11}$ utilizando $(5)$ y consecuentem
     & + \dfrac{1}{2}Q_{jj} \dfrac{1}{1 + (r_{jj} + \theta_j \Delta t + \sigma \sqrt{\Delta t}) \frac{\Delta t}{360}}.
 \end{array}
 \end{equation}
-En la práctica, para simplificar carga computacional, se ejcuta un método el método de Newton-Raphson para poder obtener el valor de $\theta_j$. Luego, podemos calcular las tasas del siguiente nivel
+En la práctica, para simplificar carga computacional, se ejecuta el método de Newton-Raphson para poder obtener el valor de $\theta_j$. Luego, podemos calcular las tasas del siguiente nivel
 \begin{equation}
 \begin{array}{ll}
     r_{i,j+1}  & = r_{ij} + \theta_j \Delta t - \sigma \sqrt{\Delta t} ~~~ i = 0,...,j\\
      r_{j+1,j+1} & = r_{jj} + \theta_j \Delta t + \sigma \sqrt{\Delta t}.
 \end{array}
 \end{equation}
-\subsection{Valorización de la opción}
+\subsection{Valorización de la opción}\label{seccion-valoracion}
 
-Como ya se mencionó anteriormente, cada nodo del árbol Ho-Lee representa un estado del mercado posibles. Suponiendo racionalidad del cliente, asumimos que en cada nodo tomaría la opción que más le conviene, ya sea seguir en el crédito un periodo más o prepagar lo que aún debe. Para calcular estos valores es clave poder traer a valor presente en cada nodo Ho-Lee. Esto lo hacemos gracias a las tasas calculadas en cada punto y tomando la esperanza de sus ramificaciones.
+Como ya se mencionó anteriormente, cada nodo del árbol Ho-Lee representa un estado posible del mercado. Suponiendo racionalidad del cliente, asumimos que en cada nodo tomaría la opción que más le conviene, ya sea seguir en el crédito un periodo más o prepagar lo que aún debe. Para calcular estos valores es clave poder traer a valor presente en cada nodo Ho-Lee. Esto lo hacemos gracias a las tasas calculadas en cada punto y tomando la esperanza de sus ramificaciones.
 
 Sea $A_{ij}$ el valor de la opción de prepago en el periodo $j$ y estado $i$. Sea $K_j$ el capital no amortizado en el periodo $j$ y $VPC_{ij}$ la suma de todas las cuotas que quedan por pagar en valor presente. Tenemos la siguiente relación iterativa
 
@@ -81,25 +115,25 @@ Sea $A_{ij}$ el valor de la opción de prepago en el periodo $j$ y estado $i$. S
     A_{ij} = \max \{VPC_{ij} - K_j, \cdot \mathbb{E}[DF(\Delta t j, \Delta t(j+1)) \cdot A_{\ell, j+1} | r_j = r_{ij}]\}.
 \end{equation}
 
-Es decir, el valor de la opción de prepago en cierto nodo es el máximo entre, prepagar el crédito y el valor de la opción en el siguiente periodo dado el estado del mercado hoy, traido a valor presente, lo cual queda ponderando por $DF(\Delta t j, \Delta t(j+1))$. Finalmente, el valor de la opción al momento de ofrecer el crédito está dado por $A_{00}$
+Es decir, el valor de la opción de prepago en cierto nodo es el máximo entre, prepagar el crédito y el valor de la opción en el siguiente periodo dado el estado del mercado hoy, traído a valor presente, lo cual queda ponderando por $DF(\Delta t j, \Delta t(j+1))$. Finalmente, el valor de la opción al momento de ofrecer el crédito está dado por $A_{00}$
 
 \subsubsection{Implementación}
 
 El árbol de valores se irá llenando en reversa, tomando en consideración de que $A_{iN} = 0$ para todo estado $i$ ya que el crédito ya terminó y no hay nada que prepagar.
 
 
-Para poder traer a valor presente las cutoas es necesario conocer $\mathbb{E}[DF(\Delta t j, \Delta tk)|r_j = r_{ij}]$ para cada nodo Ho-Lee con $k \geq j$. El factor de descuento en esperanza se calcula a través de la tasa \textit{spot} esperada a través de la siguiente relación
+Para poder traer a valor presente las cuotas es necesario conocer $\mathbb{E}[DF(\Delta t j, \Delta tk)|r_j = r_{ij}]$ para cada nodo Ho-Lee con $k \geq j$. El factor de descuento en esperanza se calcula a través de la tasa \textit{spot} esperada a través de la siguiente relación
 \begin{equation}
     \mathbb{E}[DF(\Delta t j, \Delta t k)|r_j = r_{ij}] = \dfrac{1}{1 + \tilde r_{ij}^k \frac{\Delta t}{360}}.
 \end{equation}
 donde $\tilde r_{ij}^k$ es la tasa \textit{spot} en el periodo $j$ esperada para hasta el periodo $k$ dado el estado. Por notación, de ahora en adelante obviaremos la condicionalidad $\{r_j = r_{ij}\}$.
 
-Las tasas \textit{spot} se calculan de la siguiente manera, descomponiendo el factor de descuento y utilizando $(2)$
+Las tasas \textit{spot} se calculan de la siguiente manera, descomponiendo el factor de descuento y utilizando $(16)$
 
 \begin{equation}
     \tilde r_{ij}^k = \left(\dfrac{1}{DF(\Delta t j, \Delta t (k-1)) \cdot DF(\Delta t (k-1), \Delta t k)} - 1 \right) \dfrac{360}{\Delta t}.
 \end{equation}
-Donde $DF(\Delta t j, \Delta t (k-1))$ se puede obtener con la ecuación $(2)$ a través de $\tilde r_{ij}^{k-1}$. Mientras que el segundo termino se obtiene de la tasa \text{forward} esperada del periodo $k-1$ al periodo $k$, la denotamos por $r_{ij}^{k} = \mathbb{E}[r_k|r_j = r_{ij}]$. Debido a que las probabilidades de subir y bajar en el árbol Ho-Lee son las mismas, obtenemos
+Donde $DF(\Delta t j, \Delta t (k-1))$ se puede obtener con la ecuación $(16)$ a través de $\tilde r_{ij}^{k-1}$. Mientras que el segundo término se obtiene de la tasa \text{forward} esperada del periodo $k-1$ al periodo $k$, la denotamos por $r_{ij}^{k} = \mathbb{E}[r_k|r_j = r_{ij}]$. Debido a que las probabilidades de subir y bajar en el árbol Ho-Lee son las mismas, obtenemos
 \begin{equation}
     r_{ij}^k = r_{ij} + \Delta t\sum_{\ell = j}^{k-1} \theta_\ell.
 \end{equation}
@@ -107,4 +141,4 @@ Luego, obtenemos que el valor presente del crédito está dado por
 \begin{equation}
     VPC_{ij} = \sum_{k = j+1}^{N} C_k DF(\Delta t j, \Delta t k).
 \end{equation}
-Donde $C_k$ es el valores de la $k$-ésima cuota del crédito.
+Donde $C_k$ es el valor de la $k$-ésima cuota del crédito.

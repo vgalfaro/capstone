@@ -1242,6 +1242,11 @@ INPUT ./Sections/modelo.tex
 INPUT Sections/modelo.tex
 INPUT ./Sections/modelo.tex
 INPUT Sections/modelo.tex
+INPUT ./images/grafico_Ho_Lee.png
+INPUT ./images/grafico_Ho_Lee.png
+INPUT images/grafico_Ho_Lee.png
+INPUT ./images/grafico_Ho_Lee.png
+INPUT ./images/grafico_Ho_Lee.png
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/dsserif/DSSerif.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/dsserif/DSSerif.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/dsserif/DSSerif.tfm

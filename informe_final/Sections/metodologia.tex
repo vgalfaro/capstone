@@ -7,7 +7,7 @@ Para la calibración del modelo, se utilizan dos conjuntos de datos provenientes
     \item Curva Swap Cámara Promedio en CLP: Corresponde a un derivado financiero en el que se acuerda un intercambio de flujos a distintas tasas de interés. En este caso, se utilizan los contratos interbancarios en CLP, un banco entrega un flujo a una tasa fija mientras que la contraparte entrega uno a tasa flotante, el valor del contrato se considera la tasa fija. 
     
     Se extrajo el historial de tasas de cierre diario para los 17 tenores disponibles en el mercado interbancario que van desde 1 mes hasta 25 años. Estos datos fueron obtenidos de Bloomberg, abarcando el periodo desde enero de 2021 hasta septiembre de 2025, conformando una matriz de 1256$\times$ 17 de tipo \textit{float}.
-    \item Tasa de política monetaria (TPM): Es la tasa de interés de referencia que el Banco Central determina para influir en el comportamiento de la economía, especialmente en el control de la inflación y la estabilidad de los precios. Esta tasa afecta directamente las tasas de interés que aplican los bancos comerciales y otras instituciones financieras en sus operaciones de crédito y ahorro.
+    \item Tasa de Política Monetaria (TPM): Es la tasa de interés de referencia que el Banco Central determina para influir en el comportamiento de la economía, especialmente en el control de la inflación y la estabilidad de los precios. Esta tasa afecta directamente las tasas de interés que aplican los bancos comerciales y otras instituciones financieras en sus operaciones de crédito y ahorro.
     
     Se obtuvo el historial de valores diarios de la TPM publicado por el Banco Central, cubriendo el mismo periodo que los contratos Swap, resultando en una matriz de 1180$\times$1 de tipo \textit{float}.
 \end{enumerate}
@@ -38,8 +38,7 @@ Por otro lado, los contratos de 2 a 25 años funcionan con cupones semestrales, 
   }\label{fig:0cupon}
 \end{figure}
 
-% \subsubsection{\textit{Bootstrapping}}
-La diferencia anterior dificulta la comparación de las tasas de todos los contratos en un mismo periodo de tiempo, lo cual será necesario para valorar la opcionalidad de prepago, es por esto que se utilizará la técnica explicada a continuación llamada \textit{Bootsraping} financiero, que consiste en construir una curva de tasas cero cupón a partir de los precios de un conjunto de productos con cupones. En otras palabras, para cada contrato que funciona con cupones, queremos encontrar una tasa cero cupón equivalente.
+La diferencia anterior dificulta la comparación de las tasas de todos los contratos en un mismo periodo de tiempo, lo cual será necesario para valorar la opcionalidad de prepago, es por esto que se utilizará la técnica explicada a continuación llamada \textit{Bootstrapping} financiero, que consiste en construir una curva de tasas cero cupón a partir de los precios de un conjunto de productos con cupones. En otras palabras, para cada contrato que funciona con cupones, queremos encontrar una tasa cero cupón equivalente.
 
 Para esto utilizamos el factor de descuento, el cual se define de la siguiente manera
 $$ \text{DF}(0,T) := \text{El precio hoy de recibir una unidad de dinero en el tiempo } T.$$
@@ -105,7 +104,7 @@ Para la calibración de un modelo de tasas, es necesario definir una variable qu
 
 De la figura \ref{fig:tasacortavstpm} se desprenden tres puntos importantes que aportan a la elección de la tasa corta como variable del modelo:
 \begin{enumerate}
-    \item Naturaleza de mercado: La TPM es una tasa de política monetaria fija por el Banco Central, mientras que la tasa Swap 1M incorpora diariamente las expectivas de movimientos futuros de la TPM y otros factores de mercado.
+    \item Naturaleza de mercado: La TPM es una tasa de política monetaria fijada por el Banco Central, mientras que la tasa Swap 1M incorpora diariamente las expectivas de movimientos futuros de la TPM y otros factores de mercado.
     \item Anticipación a cambios: Se evidencia como la tasa corta tiende a anticipar los movimientos de la TPM, subiendo antes de que el Banco Central realice un ajuste y bajando después.
     \item Correlación: Existe una alta correlación entre la tasa corta y la TPM, lo que valida su uso como tasa base para el modelo de tasas de interés.
 \end{enumerate}

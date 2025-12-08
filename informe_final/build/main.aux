@@ -24,7 +24,7 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \babel@aux{spanish}{}
-\citation{ley_prepago}
+\citation{valdes}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introducción}{2}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Contexto Organizacional}{2}{subsection.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Problema de Negocio}{2}{subsection.1.2}\protected@file@percent }
@@ -51,30 +51,40 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}La Tasa Corta}{7}{subsection.3.3}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces Tasa corta (1M) vs TPM }}{8}{figure.3.6}\protected@file@percent }
 \newlabel{fig:tasacortavstpm}{{3.6}{8}{Tasa corta (1M) vs TPM}{figure.3.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Modelo Propuesto}{8}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Implementación Ho-Lee}{8}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Precios Arrow-Debreu}{8}{subsubsection.4.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Volatilidad}{9}{subsubsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}Calibrando el árbol}{9}{subsubsection.4.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Valorización de la opción}{10}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Implementación}{10}{subsubsection.4.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Resultados}{11}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Calibración del Modelo de Tasas}{11}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Construcción del Árbol de Ho--Lee}{11}{subsubsection.5.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Árbol de tasas cortas generado por el modelo de Ho-Lee a 5 años plazo. La línea azul representa el valor esperado de la tasa en el plazo t. }}{11}{figure.5.1}\protected@file@percent }
-\newlabel{fig:holeetreestd}{{5.1}{11}{Árbol de tasas cortas generado por el modelo de Ho-Lee a 5 años plazo. La línea azul representa el valor esperado de la tasa en el plazo t}{figure.5.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Impacto de la Volatilidad en la Estructura del Árbol}{12}{subsubsection.5.1.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Árbol de tasas bajo un escenario de mayor volatilidad. Se aprecia una mayor dispersión de los nodos terminales. }}{12}{figure.5.2}\protected@file@percent }
-\newlabel{fig:holeetreeewma}{{5.2}{12}{Árbol de tasas bajo un escenario de mayor volatilidad. Se aprecia una mayor dispersión de los nodos terminales}{figure.5.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Valoración de la Opción de Prepago}{12}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}Dinámica del Valor de la Opción en el Tiempo}{12}{subsubsection.5.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Lattice del valor de la opción de prepago para un crédito a 5 años. Cada nodo representa el valor de la opción en ese estado y tiempo específico. }}{13}{figure.5.3}\protected@file@percent }
-\newlabel{fig:opcfrances56}{{5.3}{13}{Lattice del valor de la opción de prepago para un crédito a 5 años. Cada nodo representa el valor de la opción en ese estado y tiempo específico}{figure.5.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Análisis de Sensibilidad}{13}{subsection.5.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Valoración de la opción bajo un escenario de aumento de la volatilidad ($\sigma =100$ bps). }}{14}{figure.5.4}\protected@file@percent }
-\newlabel{fig:opcfrances100}{{5.4}{14}{Valoración de la opción bajo un escenario de aumento de la volatilidad ($\sigma =100$ bps)}{figure.5.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Entregables}{14}{subsection.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusiones y Tareas Futuras}{15}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Modelo Matemático}{8}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Modelo Ho-Lee}{8}{subsection.4.1}\protected@file@percent }
+\newlabel{modelo-mat}{{4.1}{8}{Modelo Ho-Lee}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Versión discreta del modelo}{9}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Ejemplo de árbol generado por el modelo de Ho--Lee.}}{9}{figure.4.1}\protected@file@percent }
+\newlabel{fig:arbolHL}{{4.1}{9}{Ejemplo de árbol generado por el modelo de Ho--Lee}{figure.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Implementación Ho-Lee}{9}{subsection.4.2}\protected@file@percent }
+\newlabel{seccion-holee}{{4.2}{9}{Implementación Ho-Lee}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Precios Arrow-Debreu}{9}{subsubsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Volatilidad}{10}{subsubsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Calibración del Árbol}{11}{subsubsection.4.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Valorización de la opción}{11}{subsection.4.3}\protected@file@percent }
+\newlabel{seccion-valoracion}{{4.3}{11}{Valorización de la opción}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Implementación}{12}{subsubsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Resultados}{12}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Calibración del Modelo de Tasas}{12}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Construcción del Árbol de Ho--Lee}{13}{subsubsection.5.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Árbol de tasas cortas generado por el modelo de Ho-Lee a 5 años plazo. La línea azul representa el valor esperado de la tasa en el plazo t. }}{13}{figure.5.1}\protected@file@percent }
+\newlabel{fig:holeetreestd}{{5.1}{13}{Árbol de tasas cortas generado por el modelo de Ho-Lee a 5 años plazo. La línea azul representa el valor esperado de la tasa en el plazo t}{figure.5.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Impacto de la Volatilidad en la Estructura del Árbol}{13}{subsubsection.5.1.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Árbol de tasas bajo un escenario de mayor volatilidad. Se aprecia una mayor dispersión de los nodos terminales. }}{13}{figure.5.2}\protected@file@percent }
+\newlabel{fig:holeetreeewma}{{5.2}{13}{Árbol de tasas bajo un escenario de mayor volatilidad. Se aprecia una mayor dispersión de los nodos terminales}{figure.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Valoración de la Opción de Prepago}{14}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}Dinámica del Valor de la Opción en el Tiempo}{14}{subsubsection.5.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Lattice del valor de la opción de prepago para un crédito a 5 años. Cada nodo representa el valor de la opción en ese estado y tiempo específico. }}{14}{figure.5.3}\protected@file@percent }
+\newlabel{fig:opcfrances56}{{5.3}{14}{Lattice del valor de la opción de prepago para un crédito a 5 años. Cada nodo representa el valor de la opción en ese estado y tiempo específico}{figure.5.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Análisis de Sensibilidad}{15}{subsection.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Valoración de la opción bajo un escenario de aumento de la volatilidad ($\sigma =100$ bps). }}{15}{figure.5.4}\protected@file@percent }
+\newlabel{fig:opcfrances100}{{5.4}{15}{Valoración de la opción bajo un escenario de aumento de la volatilidad ($\sigma =100$ bps)}{figure.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Entregables}{15}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusiones y Trabajo Futuro}{16}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Conclusiones}{16}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Limitaciones del Modelo Actual}{16}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Trabajo Futuro}{16}{subsection.6.3}\protected@file@percent }
 \bibcite{pca}{1}
 \bibcite{valdes}{2}
-\gdef \@abspage@last{16}
+\gdef \@abspage@last{18}

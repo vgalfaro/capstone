@@ -45,9 +45,9 @@ La Figura \ref{fig:opcfrances56} muestra el lattice del valor de la opción de p
 \end{figure}
 Podemos observar tres fenómenos relevantes:
 \begin{enumerate}
-    \item Convergencia a cero: Al final del crédito, el valor de la opción es cero, cumpliendo con la condición de frontera. Esto valida la correctitud del algoritmo implementado. 
-    \item Valor máximo: El valor de la opción no es máximo al inicio, sino que alcanza su \textit{peak} alrededor de la vida media del crédito. Esto se debe a que al inicio la probabilidad acumulada de que las tasas bajen significativamente es menor. A medida que avanza el tiempo y la volatilidad dispersa las tasas, la probabildiad de entrar a escenarios favorables para el prepago aumenta, elevando el valor de la opción antes de decaer por la amortización del capital.
-    \item Magnitud del costo: Para este escenario, el modelo estima un costo esperado de prepago en el día 0 de 68.17 bps sobre el monto del crédito. Esto monto sería el que el banco debería considerar como ajuste en la tasa ofrecida para compensar el riesgo de prepago.
+    \item Convergencia a cero: Al final del crédito, el valor de la opción es cero, cumpliendo con la condición de frontera. Esto valida la exactitud del algoritmo implementado. 
+    \item Valor máximo: El valor de la opción no es máximo al inicio, sino que alcanza su \textit{peak} alrededor de la vida media del crédito. Esto se debe a que al inicio la probabilidad acumulada de que las tasas bajen significativamente es menor. A medida que avanza el tiempo y la volatilidad dispersa las tasas, la probabilidad de entrar a escenarios favorables para el prepago aumenta, elevando el valor de la opción antes de decaer por la amortización del capital.
+    \item Magnitud del costo: Para este escenario, el modelo estima un costo esperado de prepago en el día 0 de 68.17 bps sobre el monto del crédito. Este monto sería el que el banco debería considerar como ajuste en la tasa ofrecida para compensar el riesgo de prepago.
 \end{enumerate}
 
 \subsection{Análisis de Sensibilidad}
@@ -63,7 +63,7 @@ Al aumentar la volatilidad del modelo a 100 bps, el valor de la opción de prepa
     }\label{fig:opcfrances100}
 \end{figure}
 
-Este resultado demuestra que el métdo actualde cobrar un \textit{spread} fijo o una comoisión basada en meses de interés (1.5 meses) es ineficiente:
+Este resultado demuestra que el método actual de cobrar un \textit{spread} fijo o una comisión basada en meses de interés (1.5 meses) es ineficiente:
 \begin{itemize}
     \item En periodos de baja volatilidad, el banco podría estar cobrando de más, reduciendo su competitividad en el mercado.
     \item En periodos de alta volatilidad, el banco podría estar subvalorando el riesgo, asumiendo pérdidas potenciales significativas en caso de prepagos masivos.

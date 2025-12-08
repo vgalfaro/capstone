@@ -1,18 +1,28 @@
+\subsection{Conclusiones}
+A partir del desarrollo e implementación del modelo de valoración de opciones de prepago, se derivan las siguientes conclusiones principales: 
+\begin{enumerate}
+    \item Viabilidad técnica y práctica: Se validó la factibilidad de implementar un modelo de tasa corta basado en árboles binomiales (Ho--Lee) para el mercado chileno. El modelo fue calibrado exitosamente a la curva Swap Cámara Promedio, permitiendo valorar el prepago de manera consistente. 
+    \item Subestimación del riesgo en la práctica actual: Los resultados cuantitativos revelan que la comisión actual subestima el valor real de la opción de prepago en los escenarios analizados. Esto sugiere que Itaú podría estar asumiendo un riesgo mayor al anticipado.
+    \item Alta sensibilidad a la volatilidad: Se demostró que el precio de la opción es altamente sensible al parámetro de volatilidad. Al estresar el modelo, el costo del prepago puede incrementarse significativamente, lo que confirma la necesidad de una gestión dinámica de este riesgo, pues cobrar un \textit{spread} fijo es ineficiente tanto en periodos de baja como de alta volatilidad.
+\end{enumerate}
+\subsection{Limitaciones del Modelo Actual}
 
-Después de implementar el modelo, es posible extraer conclusiones relevantes acerca de su factibilidad y de los límites que presenta en la práctica. En primer lugar, se confirma que el modelo es factible, dado que fue implementado en Python con éxito, generando resultados consistentes y calibrados al contexto del mercado chileno. Esto demuestra que la metodología aplicada puede adaptarse a entornos reales y entregar información útil para la toma de decisiones financieras.
+A pesar de los resultados observados, el modelo presenta restricciones 
+inherentes a su formulación. En primer lugar, se asume una volatilidad 
+constante, lo cual no refleja la naturaleza dinámica del mercado. Además, 
+el modelo de un solo factor limita la capacidad de capturar riesgos 
+específicos del banco, como el costo de fondeo. Estas simplificaciones 
+reducen la precisión del modelo y su aplicabilidad en escenarios más 
+complejos.
 
+\subsection{Trabajo Futuro}
 
-No obstante, es importante reconocer las limitaciones inherentes. Una de las principales simplificaciones consiste en asumir una volatilidad constante, lo cual dista de la realidad, ya que los mercados presentan variaciones dinámicas y complejas que no pueden ser capturadas plenamente bajo este supuesto. Esta restricción reduce la capacidad del modelo para reflejar escenarios más cercanos al comportamiento real de los activos.
-
-
-Asimismo, el enfoque de un solo factor implica que únicamente se controla el riesgo de mercado. Si bien esto aporta una primera aproximación, deja fuera otros elementos relevantes. La incorporación de un modelo de dos factores permitiría ampliar el análisis, integrando riesgos específicos como el costo de fondeo, lo que enriquecería la evaluación y otorgaría mayor robustez a las conclusiones obtenidas.
-
-Tras validar la factibilidad del modelo y reconocer sus limitaciones, los próximos pasos apuntan a fortalecer su precisión y alcance:
-
+Para superar las limitaciones identificadas y encaminar la solución hacia una herramienta más productiva, se proponen las siguientes líneas de trabajo futuro:
 \begin{itemize}
-    \item La implementación del modelo Ho--Lee extendido permitirá una mejor representación de la estructura temporal de tasas.
-    \item Incorporar más tipos de créditos ampliará la cobertura del análisis.
-    \item Migrar a un modelo de dos factores será clave para capturar no solo el riesgo de mercado, sino también el riesgo específico de Itaú, como el costo de fondeo.
-    \item Estudiar la estabilidad del precio de la opción con volatilidad histórica permitirá evaluar la robustez del modelo ante escenarios reales y dinámicos.
+    \item Implementar el modelo Ho--Lee extendido para mejorar la representación de la estructura temporal de tasas, permitiendo modelar la volatilidad como una variable en el tiempo.
+    \item Incorporar más tipos de créditos (alemán, bullet) para ampliar la cobertura del análisis y adaptarse a la diversidad de productos ofrecidos por el banco.
+    \item Migrar a un modelo de dos factores para capturar tanto el riesgo de mercado como el riesgo Itaú, específicamente el costo de fondeo, enriqueciendo la evaluación del prepago.
+    \item Analizar la estabilidad del precio de la opción utilizando volatilidad histórica, lo que permitirá evaluar la robustez del modelo ante escenarios reales y dinámicos del mercado.
 \end{itemize}
+
 
