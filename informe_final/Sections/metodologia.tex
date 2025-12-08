@@ -12,9 +12,67 @@ Para la calibración del modelo, se utilizan dos conjuntos de datos provenientes
     Se obtuvo el historial de valores diarios de la TPM publicado por el Banco Central, cubriendo el mismo periodo que los contratos Swap, resultando en una matriz de 1180$\times$1 de tipo \textit{float}.
 \end{enumerate}
 Se seleccionó este periodo temporal debido a la introducción de los contratos de 1 y 2 meses en 2021, fundamentales en la construcción del modelo de Ho--Lee. 
-\subsection{Procesamiento: Construcción de la Curva Cupón Cero}
 
-\subsection{PCA}
+\subsection{Procesamiento: Construcción de la Curva Cupón Cero}
+La idea central del procesamiento fue validar la hipótesis de poder modelar la tasa corta con un modelo de un factor, para lo cual fue necesario hacer que los datos de tasa para los 17 contratos disponibles sean comparables. Se partirá explicando este proceso para luego comparar los datos.
+
+\subsubsection{Normalización}
+
+% \subsubsection{Funcionamiento de los Contratos}
+
+Existe un problema al querer analizar los datos de los valores observados de los distintos contratos, y es que no todos funcionan de la misma manera. Esto es una complicación ya que significa que los datos de la matriz no representan lo mismo con respecto al largo del intervalo de su contrato, haciendo que no sean comparables dado que; por ejemplo, en la realidad el contrato de 1 año no tiene un valor luego de 6 meses dado que todo el pago será realizado luego de un año, en contraste con un contrato de 2 años que debido su pago de intereses, si tendrá un valor asociado.
+
+Las tasas de interés de los contratos de 1 a 18 meses se les dice tasa cero cupón. Esto se debe a que desde el inicio del contrato, solo se hace el intercambio de flujo al finalizar el periodo de tiempo, lo que es el pago del nominal más los intereses correspondientes.
+\begin{figure}[H]
+  \centering
+      \includegraphics[scale=0.45]{images/diagrama_contratos_cero_cupon.png}
+  \caption{Diagrama contratos cero cupón
+  }\label{fig:0cupon}
+\end{figure}
+
+Por otro lado, los contratos de 2 a 25 años funcionan con cupones semestrales, es decir, cada seis meses desde el inicio del contrato se hace un depósito de intereses.
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=0.45]{images/diagrama_contratos_semestrales.png}
+  \caption{Diagrama contratos con cupones semestrales
+  }\label{fig:0cupon}
+\end{figure}
+
+% \subsubsection{\textit{Bootstrapping}}
+La diferencia anterior dificulta la comparación de las tasas de todos los contratos en un mismo periodo de tiempo, lo cual será necesario para valorar la opcionalidad de prepago, es por esto que se utilizará la técnica explicada a continuación llamada \textit{Bootsraping} financiero, que consiste en construir una curva de tasas cero cupón a partir de los precios de un conjunto de productos con cupones. En otras palabras, para cada contrato que funciona con cupones, queremos encontrar una tasa cero cupón equivalente.
+
+Para esto utilizamos el factor de descuento, el cual se define de la siguiente manera
+$$ \text{DF}(0,T) := \text{El precio hoy de recibir una unidad de dinero en el tiempo } T.$$
+Notar que este valor es universal y no depende de los contratos. Sin embargo, es posible saber su valor a través de las tasas de interés de los contratos swap. Para un contrato swap cero cupón a un plazo $T$ y valor $r_T$, el factor de descuento se calcula de la siguiente manera
+\begin{equation}
+    \text{DF}(0,T) = \dfrac{1}{1 + r_T \frac{\text{buss}(T)}{360}},
+\end{equation}
+donde $\text{buss}(T)$ es la cantidad de días hábiles en el periodo $T$. Por otro lado, si es que el contrato funcionará con cupones semestrales, el factor de descuento se calcularía así
+\begin{equation}
+    \text{DF}(0,T) = \dfrac{1 - \sum_{i= 6\text{M}}^{T - 6\text{M}} \frac{\text{buss}(\Delta T_i)}{360} \text{DF}(0, T_i)}{1 + r_T \frac{\text{buss}(\Delta T)}{360}},
+\end{equation}
+donde $\text{buss}(\Delta T_i)$ corresponde a los días hábiles en tal periodo de 6 meses. Teniendo el factor de descuento, se puede utilizar la ecuación (1) para despejar la tasa cero cupón equivalente, obteniendo así
+
+\begin{equation}
+    r_T^{\text{0cupón}} = \dfrac{360}{\text{buss}(T)}\left( \dfrac{1}{\text{DF}(0,T) - 1}\right).
+\end{equation}
+
+Sin embargo, existe un problema. Notar que en la ecuación (2) se es necesario el valor de $\text{DF}(T_i)$ para cada semestre entre el inicio y el final del contrato. Conocer este valor de manera directa no es posible ya que hay $T_i$'s, por ejemplo 30 meses, en los que no existe contrato, por ende no existe una tasa con la cual calcular tal factor de descuento.
+
+Existen varias formas de resolver este problema, para efectos de esta etapa exploratoria de los datos decidimos realizar una interpolación lineal para la tasa de cada $T_i$ necesario. Por ejemplo, la tasa ficticia para un contrato de 30 meses, con cupones semestrales, se calcula como el promedio entre la tasa de los dos años y tres años, lo cual otorga una solución de implementación sencilla y de cálculo eficiente.
+
+$$r_{30 \text{M}} = \dfrac{r_{2 \text{Y}} + r_{3 \text{Y}}}{2}.$$
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.45]{images/seriestemporales0cupon.png}
+    \caption{Curva de tasas cero cupón
+    }\label{fig:0cupon}
+\end{figure}
+
+Lo que permite tener valores de tasa ``comparables", que nos permiten realizar el siguiente paso de análisis de datos por descomposición en componentes principales. Los valores obtenidos de tasa cero cupón para los distintos contratos se puede visualizar en la Figura \ref{fig:0cupon}.
+
+\subsubsection{PCA}
 Para validar la hipótesis de que un modelo de un factor (Ho--Lee) es adecuado para modelar la curva de tasas de interés, se realizó un Análisis de Componentes Principales sobre las tasas swap cero cupón. Litterman y Scheinkman (1991) demostraron que las variaciones en la curva de rendimientos pueden ser explicadas principalmente por tres factores: nivel, pendiente y curvatura, donde el primero explicaría el 96\% de la variabilidad, por lo tanto, si el primer componente principal explica una proporción significativa de la varianza total, se puede justificar el uso de un modelo de un factor \cite{pca}.
 
 \begin{figure}[H]
@@ -24,7 +82,7 @@ Para validar la hipótesis de que un modelo de un factor (Ho--Lee) es adecuado p
     }\label{fig:varpca}
 \end{figure}
 
-Los resultados indican que las dos primeras componentes explican el 98.4\% de la variabilidad total de las tasas Swap cero cupón, la primera componente explica el 81.5\% de la variabilidad y la segunda un 16.9\%, lo cual difiere a lo planteado por Litterman y Scheinkman (1991). Este resultado no invalida el modelo, sino que refleja el contexto económico particular del periodo 2021-2025, que incluye una pandemia mundial y una alza en la inflación. La agresividad del Banco Central con el aumento de la TPM en un corto plazo provocó un desacople entre las tasas cortas y las tasas largas, lo que se refleja en la mayor relevancia del factor pendiente en la explicación de la variabilidad.
+Los resultados se muestran en la Figura \ref{fig:varpca} e indican que las dos primeras componentes explican el 98.4\% de la variabilidad total de las tasas Swap cero cupón, la primera componente explica el 81.5\% de la variabilidad y la segunda un 16.9\%, lo cual difiere a lo planteado por Litterman y Scheinkman (1991). Este resultado no invalida el modelo, sino que refleja el contexto económico particular del periodo 2021-2025, que incluye una pandemia mundial y una alza en la inflación. La agresividad del Banco Central con el aumento de la TPM en un corto plazo provocó un desacople entre las tasas cortas y las tasas largas, lo que se refleja en la mayor relevancia del factor pendiente en la explicación de la variabilidad.
 
 \begin{figure}[H]
   \centering
@@ -32,7 +90,7 @@ Los resultados indican que las dos primeras componentes explican el 98.4\% de la
   \caption{Valores históricos de los 17 contratos Swap en CLP
   }\label{fig:curvasobservadas}
 \end{figure}
-Podemos observar el fenómeno del desacople en la figura \ref{fig:curvasobservadas}, donde las tasas de corto plazo (1M, 2M, 3M) muestran un comportamiento diferente al de las tasas de largo plazo (10Y, 15Y, 20Y, 25Y), especialmente durante los periodos de ajuste de la TPM por parte del Banco Central.
+Podemos observar el fenómeno del desacople en la Figura \ref{fig:curvasobservadas}, donde las tasas de corto plazo (1M, 2M, 3M) muestran un comportamiento diferente al de las tasas de largo plazo (10Y, 15Y, 20Y, 25Y), especialmente durante los periodos de ajuste de la TPM por parte del Banco Central.
 
 \subsection{La Tasa Corta}
 
@@ -51,60 +109,3 @@ De la figura \ref{fig:tasacortavstpm} se desprenden tres puntos importantes que 
     \item Anticipación a cambios: Se evidencia como la tasa corta tiende a anticipar los movimientos de la TPM, subiendo antes de que el Banco Central realice un ajuste y bajando después.
     \item Correlación: Existe una alta correlación entre la tasa corta y la TPM, lo que valida su uso como tasa base para el modelo de tasas de interés.
 \end{enumerate}
-\section{Exploración y Procesamiento de los Datos}
-
-
-% \subsection{Normalización}
-
-% \subsubsection{Funcionamiento de los Contratos}
-
-% \qquad Existe un problema al querer analizar los datos de los valores observados de los contratos, y es que no todos funcionan de la misma manera. Esto es una complicación ya que significa que los datos de la matriz no representan lo mismo con respecto al largo del intervalo de su contrato, haciendo que no sean comparables.
-
-% \qquad Las tasas de interés de los contratos de 1 a 18 meses se les dice cero cupón. Esto se debe a que desde el inicio del contrato, solo se hace el intercambio de flujo al finalizar el periodo de tiempo, lo que es el pago del nominal mas los intereses correspondientes.
-% \begin{figure}[H]
-%   \centering
-%       \includegraphics[scale=0.45]{images/diagrama_contratos_cero_cupon.png}
-%   \caption{Diagrama contratos cero cupón
-%   }\label{fig:0cupon}
-% \end{figure}
-
-% \qquad Por otro lado, los contratos de 2 a 25 años funcionan con cupones semestrales, es decir, cada seis meses desde el inicio del contrato se hace un depósito de intereses.
-% \begin{figure}[H]
-%   \centering
-%     \includegraphics[scale=0.45]{images/diagrama_contratos_semestrales.png}
-%   \caption{Diagrama contratos con cupones semestrales
-%   }\label{fig:0cupon}
-% \end{figure}
-
-% \subsubsection{\textit{Bootstrapping}}
-
-% \qquad Para solucionar este problema existe un proceso llamado \textit{Bootsraping} financiero. El cual consiste en construir una curva de tasas de cero cupón a partir de los precios de un conjunto de productos con cupones. En otras palabras, para cada contrato que funciona con cupones, queremos encontrar una tasa cero cupón equivalente.
-
-% \qquad Para esto utilizamos el factor de descuento, el cual se define de la siguiente manera
-% $$ \text{DF}(0,T) := \text{El precio hoy de recibir una unidad de dinero en el tiempo } T.$$
-% Notar que este valor es universal y no depende de los contratos. Sin embargo, es posible saber su valor a través de las tasas de interés de los contratos swap. Para un contrato swap cero cupón a un plazo $T$ y valor $r_T$, el factor de descuento se calcula de la siguiente manera
-% \begin{equation}
-%     \text{DF}(0,T) = \dfrac{1}{1 + r_T \frac{\text{buss}(T)}{360}},
-% \end{equation}
-% donde $\text{buss}(T)$ es la cantidad de días hábiles en el periodo $T$. Por otro lado, si es que el contrato funcionará con cupones semestrales, el factor de descuento se calcularía así
-% \begin{equation}
-%     \text{DF}(0,T) = \dfrac{1 - \sum_{i= 6\text{M}}^{T - 6\text{M}} \frac{\text{buss}(\Delta T_i)}{360} \text{DF}(0, T_i)}{1 + r_T \frac{\text{buss}(\Delta T)}{360}},
-% \end{equation}
-% donde $\text{buss}(\Delta T_i)$ corresponde a los días hábiles en tal periodo de 6 meses. Teniendo el factor de descuento, se puede utilizar la ecuación (1) para despejar la tasa cero cupón equivalente, obteniendo así
-
-% \begin{equation}
-%     r_T^{\text{0cupón}} = \dfrac{360}{\text{buss}(T)}\left( \dfrac{1}{\text{DF}(0,T) - 1}\right).
-% \end{equation}
-
-% \qquad Sin embargo, existe un problema. Notar que en la ecuación (2) se es necesario el valor de $\text{DF}(T_i)$ para cada semestre entre el inicio y el final del contrato. Conocer este valor de manera directa no es posible ya que hay $T_i$'s, por ejemplo 30 meses, en los que no existe contrato, por ende no existe una tasa con la cual calcular tal factor de descuento.
-
-% \qquad Existen varias formas de resolver este problema, para efectos de esta etapa exploratoria de los datos decidimos realizar una interpolación lineal para la tasa de cada $T_i$ necesario. Por ejemplo, la tasa ficticia para un contrato de 30 meses, con cupones semestrales, se calcula como el promedio entre la tasa de los dos años y tres años.
-
-% $$r_{30 \text{M}} = \dfrac{r_{2 \text{Y}} + r_{3 \text{Y}}}{2}.$$
-
-% \begin{figure}[H]
-%     \centering
-%         \includegraphics[scale=0.45]{images/seriestemporales0cupon.png}
-%     \caption{Curva de tasas cero cupón
-%     }\label{fig:0cupon}
-% \end{figure}

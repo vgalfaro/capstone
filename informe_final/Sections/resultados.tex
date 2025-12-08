@@ -15,7 +15,7 @@ A diferencia de modelos normales simples que pueden arrojar tasas negativas con 
 
 \subsubsection{Impacto de la Volatilidad en la Estructura del Árbol}
 
-Para evaluar la sensibilidad del modelo a la estimación de la volatilidad, se generó un escenario alternativo con una volatilidad histórica de mayor plazo ($\sigma\approx$16.84 bps, calculada vía EWMA desde 2021). Es posible observar como el árbol se "abre" significativamente más, capturando escenarios extremos para tasas más altas y bajas (ver Figura \ref{fig:holeetreeewma}), 
+Para evaluar la sensibilidad del modelo a la estimación de la volatilidad, se generó un escenario alternativo con una volatilidad histórica de mayor plazo ($\sigma\approx$16.84 bps, calculada vía EWMA desde 2021). Es posible observar como el árbol se ``abre'' significativamente más, capturando escenarios extremos para tasas más altas y bajas (ver Figura \ref{fig:holeetreeewma}), 
 
 \begin{figure}[H]
     \centering
@@ -36,7 +36,7 @@ Utilizando el árbol de Ho-Lee calibrado, se procedió a valorar la opción de p
 \end{itemize}
 
 \subsubsection{Dinámica del Valor de la Opción en el Tiempo}
-La Figura \ref{fig:opcfrances56} muestra el lattice del valor de la opción de prepago (bps sobre el capital ) en cada nodo del árbol de Ho--Lee, es decir, en cada posible escenario de la tasa corta.
+La Figura \ref{fig:opcfrances56} muestra el lattice del valor de la opción de prepago (bps sobre el capital) en cada nodo del árbol de Ho--Lee, es decir, en cada posible escenario de la tasa corta.
 \begin{figure}[H]
     \centering
         \includegraphics[scale=0.5]{images/opcfrances56.png}
@@ -52,16 +52,29 @@ Podemos observar tres fenómenos relevantes:
 
 \subsection{Análisis de Sensibilidad}
 
+Un hallazgo crítico de los resultados es la alta sensibilidad del valor de la opción ante la volatilidad del mercado. 
 
+Al aumentar la volatilidad del modelo a 100 bps, el valor de la opción de prepago casi se duplica, pasando de 68 bps a 120.99 bps (ver Figura \ref{fig:opcfrances100}), es decir, un aumento de un 1.20\% en la tasa ofrecida al cliente para compensar el riesgo de prepago. 
 
+\begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.5]{images/opcfrances100.png}
+    \caption{Valoración de la opción bajo un escenario de aumento de la volatilidad ($\sigma=100$ bps).
+    }\label{fig:opcfrances100}
+\end{figure}
+
+Este resultado demuestra que el métdo actualde cobrar un \textit{spread} fijo o una comoisión basada en meses de interés (1.5 meses) es ineficiente:
+\begin{itemize}
+    \item En periodos de baja volatilidad, el banco podría estar cobrando de más, reduciendo su competitividad en el mercado.
+    \item En periodos de alta volatilidad, el banco podría estar subvalorando el riesgo, asumiendo pérdidas potenciales significativas en caso de prepagos masivos.
+\end{itemize}
 
 
 \subsection{Entregables}
-
-Los entregables de este proyecto son los siguientes:
-\begin{itemize}
-    \item Paquete de datos para la calibración de los modelos: esto incluye las curvas ero cupón de las curvas swap camara peso.
+Como cierre del proceso de desarrollo y validación, se consolidan los siguientes entregables acordados con la contraparte del Banco Itaú, los cuales materializan la solución propuesta:
+\begin{enumerate}
+    \item Paquete de datos para la calibración de los modelos: esto incluye las curvas cero cupón de las curvas swap camara peso.
     \item Implementación del modelo Ho-Lee en python.
     \item Implementación del modelo de valorización de la opción de prepago de python.
     \item Informe técnico de como usar este modelo y sus límites de aplicación.
-\end{itemize}
+\end{enumerate}
