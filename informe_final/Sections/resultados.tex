@@ -73,8 +73,10 @@ Este resultado demuestra que el métdo actualde cobrar un \textit{spread} fijo o
 \subsection{Entregables}
 Como cierre del proceso de desarrollo y validación, se consolidan los siguientes entregables acordados con la contraparte del Banco Itaú, los cuales materializan la solución propuesta:
 \begin{enumerate}
-    \item Paquete de datos para la calibración de los modelos: esto incluye las curvas cero cupón de las curvas swap camara peso.
-    \item Implementación del modelo Ho-Lee en python.
-    \item Implementación del modelo de valorización de la opción de prepago de python.
-    \item Informe técnico de como usar este modelo y sus límites de aplicación.
+    \item Paquete de datos para la calibración de los modelos: Conjunto de datos que contiene las curvas Swap Cámara Promedio procesadas y transformadas a curvas cupón cero.
+    \item Librería de modelos de tasa en Python: Implementación del modelo de Ho--Lee, estructurado de manera modular. El código permite la construcción del árbol binomial calibrado a una curva de mercado arbitraria y a una volatilidad definida por el usuario.
+    \item Motor de valoración de opciones en Python: Script que implementa el algoritmo de valoración de opciones de prepago utilizando el árbol de Ho--Lee. Incluye funciones para definir las características del crédito (francés, alemán y bullet) y calcular el valor de la opción en cada nodo del árbol, retornando el valor inicial de la opción en bps sobre el capital.
+    \item README detallado: Documento que explica el uso de las librerías desarrolladas. Incluye ejemplos de como cargar datos, calibrar el modelo y valorar opciones de prepago para distintos tipos de créditos. También, ejemplos para la generación de distintos gráficos de análisis.
 \end{enumerate}
+
+Estos entregables pueden ser encontrados en el siguiente repositorio de GitHub: \href{https://github.com/vgalfaro/capstone.git}{Valoración de Opcionalidades de Prepago en Créditos Hipotecarios}.

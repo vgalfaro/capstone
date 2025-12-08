@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1765153053 "/Users/vicentealfaro/Documents/Ingenieria/8_semestre/capstone/capstone/informe_final/main.tex" "build/main.pdf" "main" 1765153058
+["pdflatex"] 1765153637 "/Users/vicentealfaro/Documents/Ingenieria/8_semestre/capstone/capstone/informe_final/main.tex" "build/main.pdf" "main" 1765153642
   "/Users/vicentealfaro/Documents/Ingenieria/8_semestre/capstone/capstone/informe_final/main.tex" 1765152795 4962 a81a08ff4870705e988e20fd10bc01bb ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -219,14 +219,14 @@
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1679090322 2826434 b5e9d105a97cff0d0b9e1a1e04ed309f ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
   "Sections/biblio.tex" 1760316534 759 82b4fc7e4521feb562576ece0d6f47bf ""
-  "Sections/gantt.tex" 1765151591 2058 644d3cb54568073148828c931cae8be7 ""
+  "Sections/gantt.tex" 1765153069 2058 644d3cb54568073148828c931cae8be7 ""
   "Sections/introduccion.tex" 1765127910 2912 6809c46f1a7f180c6d3d3c988e6b29ca ""
   "Sections/metodologia.tex" 1765152804 10441 8e8a3fbae032e5e25ba3d8b3a1a3e7dd ""
   "Sections/modelo.tex" 1765153053 8310 d3a7b07f13864403cfbeb527b87565c3 ""
   "Sections/propuesta.tex" 1765127910 942 50fd890b75e2ef41b4c8c57e9d1dcf32 ""
-  "Sections/resultados.tex" 1765151812 5831 3e4cf118f9a5d1360265bf065e07af19 ""
-  "build/main.aux" 1765153058 7932 22735ae6e8233bac7689e90239f446ab "pdflatex"
-  "build/main.out" 1765153058 5378 4daf01dd15f3c3afcab036b64aeb70bc "pdflatex"
+  "Sections/resultados.tex" 1765153637 6781 54d9495ad050a4857942771cf56e521b ""
+  "build/main.aux" 1765153641 7932 89ac43913add4bc986ca0343847e9475 "pdflatex"
+  "build/main.out" 1765153641 5378 4daf01dd15f3c3afcab036b64aeb70bc "pdflatex"
   "images/diagrama_contratos_cero_cupon.png" 1760199856 14756 bd924eea0285650753cea43c96ae80f5 ""
   "images/diagrama_contratos_semestrales.png" 1760199856 26594 ec06383b4e142b6ee35bea65858f86af ""
   "images/holee_ewma.png" 1765144793 777447 4cc17e248569ff6d0200be54a0cc1878 ""
