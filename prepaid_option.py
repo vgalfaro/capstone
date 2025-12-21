@@ -27,7 +27,7 @@ class PrepaidOption:
                     self.cred_pval[i, j] += self.cred.coup[k] * r_to_df(spots[k - j], self.dt)
                 
                 expected_free_risk_rate = (1 + 0.5 * (self.shorts.r[i+1, j] + self.shorts.r[i+1, j+1])*self.dt)**-1 
-                print(expected_free_risk_rate)
+                # print(expected_free_risk_rate)
         for i in range(0,self.cred.N+1):
             self.opt_val[i,self.cred.N] = 0
 
