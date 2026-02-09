@@ -1,3 +1,4 @@
+import numpy as np
 
 class Credit:
 
@@ -5,15 +6,16 @@ class Credit:
 
         self.dt = dt
         self.ann_r = ann_r
-        self.eff_r = (1+self.ann_r) ** self.dt - 1
+        self.eff_r = (1 + self.ann_r) ** self.dt - 1
         self.N = N
         self.nom = nom
         self.credit_type = credit_type
-
-        self.coup = [0 for i in range(self.N+1)]
-        self.inter = [0 for i in range(self.N+1)]
-        self.amort = [0 for i in range(self.N+1)]
-        self.sum_amort = [0 for i in range(self.N + 1)]
+        
+        self.saldo     = np.zeros(self.N + 1)
+        self.coup      = np.zeros(self.N + 1)
+        self.inter     = np.zeros(self.N + 1)
+        self.amort     = np.zeros(self.N + 1)
+        self.sum_amort = np.zeros(self.N + 1)
 
         if self.credit_type == "bullet":
             self.set_coups_bullet()
@@ -23,25 +25,40 @@ class Credit:
 
         elif self.credit_type == "german":
             self.set_coups_german()
+
+        elif self.credit_type == "custom":
             pass
 
     def set_coups_bullet(self):
-        coup_val = (self.eff_r)*self.nom
+        coup_val   = (self.eff_r)*self.nom
         self.inter = [0] + [coup_val for i in range(1, self.N+1)]
-        self.coup = [0] + [coup_val for i in range(1, self.N+1)]
+        self.coup  = [0] + [coup_val for i in range(1, self.N+1)]
         self.coup[-1] = self.coup[-1] + self.nom
         self.amort[-1] = self.nom
         self.sum_amort[-1] = self.nom
 
     def set_coups_french(self):
-        coup_val = self.nom * (self.eff_r* (1 + self.eff_r) ** self.N) / ((1 + self.eff_r) ** self.N - 1)
-
+        coup_val = self.nom * (self.eff_r * (1 + self.eff_r) ** self.N) / ((1 + self.eff_r) ** self.N - 1)
         # Descomponemos cada cupón
-        for i in range(1, self.N+1):
-            self.coup[i] = coup_val
-            self.inter[i] = (self.nom - self.sum_amort[i-1]) * ((1+self.ann_r) ** self.dt - 1)
-            self.amort[i] = coup_val - self.inter[i]
-            self.sum_amort[i] = self.sum_amort[i-1] + self.amort[i]
+
+        self.coup = np.full(self.N + 1, coup_val)
+        self.coup[0] = 0.0
+        self.saldo[0] = self.nom
+
+        for i in range(1, self.N + 1):
+            interes = self.saldo[i - 1] * self.eff_r
+            amortizacion = coup_val - interes
+            self.saldo[i] = self.saldo[i - 1] - amortizacion
+            if self.saldo[i] < 0:
+                self.saldo[i] = 0.0
+            self.inter[i] = interes
+            self.amort[i] = amortizacion
+            self.sum_amort[i] = self.sum_amort[i - 1] + amortizacion
+
+        # for i in range(1, self.N+1):
+        #     self.inter[i] = (self.nom - self.sum_amort[i-1]) * self.eff_r
+        #     self.amort[i] = coup_val - self.inter[i]
+        #     self.sum_amort[i] = self.sum_amort[i-1] + self.amort[i]
 
     def set_coups_german(self):
         # Descomponemos cada cupón
